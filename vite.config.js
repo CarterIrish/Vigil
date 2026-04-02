@@ -5,7 +5,6 @@ export default defineConfig({
     root: 'client',
     plugins: [react()],
     build: {
-        outDir: '../hosted',
-        target: 'esnext',
+        outDir: '../hosted'
     },
 })
