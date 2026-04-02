@@ -1,5 +1,5 @@
 # Vigil
-At its core, Vigil is a widget-based server monitoring dashboard that lets users define custom endpoints for tracking server health and statistics. Beyond monitoring, users have access to a collection of utility widgets that round out the dashboard experience and provide a more customized experience. 
+At its core, Vigil is a widget-based server monitoring dashboard that lets users define custom endpoints for tracking server health and statistics. Beyond monitoring, users have access to a collection of utility widgets that round out the dashboard and provide a more customized experience. 
 
  
 ## Purpose
