@@ -24,7 +24,7 @@ VIGIL is built for homelabbers and self-hosters who want a single, glanceable da
 | Build | Vite |
 | Database | MongoDB via Mongoose |
 | Sessions | Redis |
-| Linting | ESLint (Airbnb spec) |
+| Linting | ESLint (JS recommended config) |
 | CI | GitHub Actions |
 | Deployment | Heroku |
 
