@@ -13,6 +13,21 @@ VIGIL is built for homelabbers and self-hosters who want a single, glanceable da
 - Deliver a polished, professional user experience that works as a real-world tool
 - Support a freemium model where free-tier users can monitor up to 2 servers, while premium users unlock additional server slots and premium widgets
 
+## Tech Stack
+ 
+| Layer | Technology |
+|-------|------------|
+| Runtime | Node.js |
+| Server | Express.js |
+| Templating | Handlebars |
+| Frontend | React |
+| Build | Vite |
+| Database | MongoDB via Mongoose |
+| Sessions | Redis |
+| Linting | ESLint (Airbnb spec) |
+| CI | GitHub Actions |
+| Deployment | Heroku |
+
 ## Requirements
  
 - **User Accounts** — Signup, login, and password change with session management backed by Redis
