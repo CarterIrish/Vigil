@@ -1,10 +1,19 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 
 export default defineConfig({
-    root: 'client',
     plugins: [react()],
     build: {
-        outDir: '../hosted'
+        outDir: 'hosted',
+        rollupOptions: {
+            input: {
+                app: resolve(__dirname, 'client/app.tsx'),
+                login: resolve(__dirname, 'client/login.tsx'),
+            },
+            output: {
+                entryFileNames: '[name]Bundle.js',
+            },
+        },
     },
-})
+});

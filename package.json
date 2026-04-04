@@ -2,12 +2,14 @@
   "name": "vigil",
   "version": "1.0.0",
   "description": "A dashboard application that allows users to define custom endpoints for widgets such as server health &amp; statistics. Users also have access to collection of custom widgets that create a complete user experience.",
-  "main": "src/server.js",
+  "main": "server/app.ts",
   "scripts": {
+    "dev": "concurrently \"vite\" \"nodemon --exec tsx server/app.ts\"",
+    "build": "vite build",
+    "start": "tsx server/app.ts",
+    "heroku-postbuild": "vite build",
     "pretest": "eslint ./server --fix",
-    "test": "echo \"All tests completed\"",
-    "dev": "vite dev",
-    "build": "vite build"
+    "test": "echo \"All tests completed\""
   },
   "repository": {
     "type": "git",
@@ -23,13 +25,32 @@
   "homepage": "https://github.com/CarterIrish/Vigil#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/compression": "^1.8.1",
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.18.2",
+    "@types/node": "^25.5.2",
+    "@types/serve-favicon": "^2.5.7",
     "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.2.1",
     "eslint": "^10.1.0",
     "globals": "^17.4.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
     "vite": "^8.0.3"
   },
   "dependencies": {
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "bcrypt": "^6.0.0",
+    "compression": "^1.8.1",
+    "connect-redis": "^9.0.0",
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "express-handlebars": "^9.0.1",
+    "express-session": "^1.19.0",
+    "helmet": "^8.1.0",
+    "mongoose": "^9.4.1",
+    "redis": "^5.11.0",
+    "serve-favicon": "^2.5.1",
+    "underscore": "^1.13.8"
   }
 }
