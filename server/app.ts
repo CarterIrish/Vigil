@@ -1,7 +1,7 @@
-require("dotenv").config();
+import 'dotenv/config';
 
 import path from 'path';
-import express, { Express, Request, Response, NextFunction } from 'express';
+import express, { Express } from 'express';
 import compression from 'compression';
 import favicon from 'serve-favicon';
 import mongoose from 'mongoose';
