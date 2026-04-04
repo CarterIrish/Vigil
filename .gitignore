@@ -139,5 +139,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 # Vite build output
-hosted/
+# Vite build output - JS bundles ignored, static assets committed
+hosted/*.js
+hosted/assets/
 Project 2.pdf
