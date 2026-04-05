@@ -3,7 +3,6 @@ import { Account, Dashboard } from './controllers';
 
 const router = (app: Application) => {
 
-
     app.get('/dashboard', Dashboard.dashboardPage);
 
     app.get('/login', Account.loginPage);

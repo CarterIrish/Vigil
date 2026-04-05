@@ -4,7 +4,7 @@
   "description": "A dashboard application that allows users to define custom endpoints for widgets such as server health &amp; statistics. Users also have access to collection of custom widgets that create a complete user experience.",
   "main": "server/app.ts",
   "scripts": {
-    "dev": "concurrently \"vite\" \"nodemon --exec tsx server/app.ts\"",
+    "dev": "concurrently \"vite build --watch\" \"npx nodemon --exec tsx server/app.ts\"",
     "build": "vite build",
     "start": "tsx server/app.ts",
     "heroku-postbuild": "vite build",
