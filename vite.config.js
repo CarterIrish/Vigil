@@ -8,8 +8,8 @@ export default defineConfig({
         outDir: 'hosted',
         rollupOptions: {
             input: {
-                app: resolve(__dirname, 'client/app.tsx'),
-                login: resolve(__dirname, 'client/login.tsx'),
+                app: resolve('client/app.tsx'),
+                login: resolve('client/login.tsx'),
             },
             output: {
                 entryFileNames: '[name]Bundle.js',
