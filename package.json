@@ -7,7 +7,7 @@
     "dev": "concurrently \"webpack watch\" \"npx nodemon --watch server --exec tsx server/app.ts\"",
     "build": "webpack",
     "start": "node dist/app.js",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "tsc && webpack",
     "pretest": "eslint ./server --fix",
     "test": "echo \"All tests completed\""
   },

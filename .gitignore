@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # Project files
 Project 2.pdf
+
+# Build output
+hosted
