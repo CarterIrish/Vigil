@@ -8,7 +8,7 @@
     "build": "vite build",
     "postbuild": "tsc",
     "start": "node dist/app.js",
-    "heroku-postbuild": "vite build",
+    "heroku-postbuild": "npm run build",
     "pretest": "eslint ./server --fix",
     "test": "echo \"All tests completed\""
   },
