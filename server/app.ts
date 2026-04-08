@@ -12,7 +12,7 @@ const PORT = process.env.PORT || process.env.NODE_PORT;
 const app: Express = express();
 
 app.use(helmet());
-app.use('assets/', express.static(path.resolve(`${__dirname}/../hosted`)));
+app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted`)));
 app.use(favicon(path.resolve(`${__dirname}/../hosted/img/favicon.png`)));
 app.use(compression());
 app.use(express.urlencoded({ extended: true }));
