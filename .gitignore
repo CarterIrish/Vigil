@@ -142,4 +142,5 @@ vite.config.ts.timestamp-*
 Project 2.pdf
 
 # Build output
-hosted
+hosted/*Bundle.js
+hosted/*.LICENSE.txt
