@@ -1,6 +1,5 @@
-import {Application} from 'express';
 import * as controllers from './controllers';
-import { Request, Response } from 'express';
+import { Request, Response, Application } from 'express';
 
 const router = (app: Application) => {
     
@@ -9,7 +8,7 @@ const router = (app: Application) => {
     app.get('/settings', controllers.Account.settingsPage);
     app.get('/', controllers.Account.LoginPage);
     app.get('*', (req: Request, res: Response) => {
-        res.status(404).render('404');
+        res.status(404).render('notFound');
     });
 };
 
