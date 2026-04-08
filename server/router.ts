@@ -7,7 +7,7 @@ const router = (app: Application) => {
     app.get('/login', controllers.Account.LoginPage);
     app.get('/settings', controllers.Account.settingsPage);
     app.get('/', controllers.Account.LoginPage);
-    app.get('*', (req: Request, res: Response) => {
+    app.get('/*notFound', (req: Request, res: Response) => {
         res.status(404).render('notFound');
     });
 };
