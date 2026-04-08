@@ -6,6 +6,12 @@ const tsparser = require("@typescript-eslint/parser");
 module.exports = [
   js.configs.recommended,
   {
+    files: ["eslint.config.js"],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  {
     files: ["server/**/*.ts"],
     languageOptions: {
       parser: tsparser,
