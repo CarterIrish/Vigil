@@ -36,6 +36,7 @@ redisClient.connect().then(() => {
     app.use(compression());
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
+    app.set('trust proxy', 1);
     app.use(session({
         name: 'sessionid',
         store: new RedisStore({ client: redisClient }),
