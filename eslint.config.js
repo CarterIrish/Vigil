@@ -12,6 +12,17 @@ module.exports = [
     },
   },
   {
+    files: ["client/**/*.js", "client/**/*.jsx"],
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+  },
+  {
     files: ["server/**/*.ts"],
     languageOptions: {
       parser: tsparser,
@@ -25,10 +36,4 @@ module.exports = [
       "no-console": "warn",
     },
   },
-  {
-    files: ["client/**/*.js", "client/**/*.jsx"],
-    languageOptions: {
-      globals: globals.browser
-    }
-  }
 ];

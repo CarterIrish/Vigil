@@ -42,7 +42,7 @@ AccountSchema.statics.toAPI = (doc) => (
     }
 );
 
-AccountModel = mongoose.model<IAccount, IAccountModel>('Account', AccountSchema);
+
 
 AccountSchema.statics.generateHash = (password) => bcrypt.hash(password, saltRounds);
 AccountSchema.statics.authenticate = async (username, password, callback) => {
@@ -61,4 +61,5 @@ AccountSchema.statics.authenticate = async (username, password, callback) => {
     }
 };
 
+AccountModel = mongoose.model<IAccount, IAccountModel>('Account', AccountSchema);
 export default AccountModel;

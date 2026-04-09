@@ -10,11 +10,11 @@ import router from './router';
 
 import mongoose from 'mongoose';
 import session from 'express-session';
-import {RedisStore} from 'connect-redis';
-import redis from 'redis';
+import { RedisStore } from 'connect-redis';
+import { createClient } from 'redis';
 
 const PORT = process.env.PORT || process.env.NODE_PORT;
-const dbURI = process.env.MOGODB_URI || 'mongodb://localhost/Vigil';
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/Vigil';
 
 mongoose.connect(dbURI).catch((err) => {
     if (err) {
@@ -23,7 +23,7 @@ mongoose.connect(dbURI).catch((err) => {
     }
 })
 
-const redisClient = redis.createClient({ url: process.env.REDISCLOUD_URL });
+const redisClient = createClient({ url: process.env.REDISCLOUD_URL });
 
 redisClient.on('error', err => console.log('Redis Client Error', err));
 
@@ -36,11 +36,10 @@ redisClient.connect().then(() => {
     app.use(compression());
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
-
     app.use(session({
         name: 'sessionid',
         store: new RedisStore({
-            client:redisClient
+            client: redisClient
         }),
         secret: process.env.SESSION_SECRET!,
         resave: false,
