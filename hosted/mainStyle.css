@@ -46,3 +46,37 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.mainForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 300px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mainForm input[type="text"],
+.mainForm input[type="password"] {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.formSubmit {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#errorMessage {
+    color: red;
+    text-align: center;
+    margin-top: 0.5rem;
+}

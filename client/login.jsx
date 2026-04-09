@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { handleError, sendPost, hideError } from "./helper";
+const { handleError, sendPost, hideError } = require("./helper");
 
 const handleLogin = (e) => {
   e.preventDefault();

@@ -36,8 +36,8 @@ const sendPost = async (url, data, handler) => {
     }
 };
 
-export {
+module.exports = {
     handleError,
     hideError,
     sendPost
-}
+};
