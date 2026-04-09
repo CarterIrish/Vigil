@@ -1,13 +1,13 @@
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 
-interface IAccount extends mongoose.Document {
+export interface IAccount extends mongoose.Document {
     username: string;
     password: string;
     createdAt: Date;
 }
 
-interface IAccountModel extends mongoose.Model<IAccount> {
+export interface IAccountModel extends mongoose.Model<IAccount> {
     generateHash(password: string): Promise<string>;
     authenticate(username: string, password: string, callback: (err?: Error | null, doc?: IAccount) => void): Promise<void>;
     toAPI(doc: IAccount): { username: string; _id: mongoose.Types.ObjectId };
