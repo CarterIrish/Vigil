@@ -38,12 +38,15 @@ redisClient.connect().then(() => {
     app.use(express.json());
     app.use(session({
         name: 'sessionid',
-        store: new RedisStore({
-            client: redisClient
-        }),
+        store: new RedisStore({ client: redisClient }),
         secret: process.env.SESSION_SECRET!,
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 30 * 60 * 1000, // 30 minutes in ms
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+        }
     }));
 
     app.engine('handlebars', engine({ defaultLayout: '' }));
