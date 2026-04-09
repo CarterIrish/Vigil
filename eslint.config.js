@@ -25,4 +25,10 @@ module.exports = [
       "no-console": "warn",
     },
   },
+  {
+    files: ["client/**/*.js", "client/**/*.jsx"],
+    languageOptions: {
+      globals: globals.browser
+    }
+  }
 ];
