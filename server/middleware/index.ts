@@ -26,10 +26,4 @@ export const requiresLogout = (req: Request, res: Response, next: NextFunction) 
     return next();
 }
 
-const secureConnect = process.env.NODE_ENV === 'production' ? requiresSecure : bypassSecure;
-
-export default {
-    requiresLogin,
-    requiresLogout,
-    secureConnect
-};
+export const secureConnect = process.env.NODE_ENV === 'production' ? requiresSecure : bypassSecure;
