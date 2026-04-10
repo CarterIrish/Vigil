@@ -1,16 +1,16 @@
-const handleError = (message) => {
+export const handleError = (message) => {
     const errorElement = document.querySelector('#errorMessage');
     errorElement.textContent = message;
     errorElement.style.display = 'block';
 }
 
-const hideError = () => {
+export const hideError = () => {
     const errorElement = document.querySelector('#errorMessage');
     errorElement.style.display = 'none';
     errorElement.textContent = '';
 }
 
-const sendPost = async (url, data, handler) => {
+export const sendPost = async (url, data, handler) => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -34,10 +34,4 @@ const sendPost = async (url, data, handler) => {
     if(handler) {
         handler(result);
     }
-};
-
-module.exports = {
-    handleError,
-    hideError,
-    sendPost
 };
