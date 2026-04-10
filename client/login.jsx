@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-const { handleError, sendPost, hideError } = require("./helper");
+import { handleError, sendPost, hideError } from "./helper";
 
 const handleLogin = (e) => {
   e.preventDefault();
@@ -53,7 +53,7 @@ const SignupWindow = () => {
       <input id="user" type="text" name="username" placeholder="username" />
       <label htmlFor="pass">Password: </label>
       <input id="pass" type="password" name="pass" placeholder="password" />
-      <label htmlFor="pass2">Password: </label>
+      <label htmlFor="pass2">Confirm Password: </label>
       <input id="pass2" type="password" name="pass2" placeholder="password" />
       <input className="formSubmit" type="submit" value="Sign Up" />
     </form>
