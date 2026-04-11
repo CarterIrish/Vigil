@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 
 const App = () => {
@@ -11,10 +11,10 @@ const App = () => {
 
 const ServerHealthWidget = (props) => {
   const [healthData, setHealthData] = useState(null);
-  const [reloadHealth, setReloadHealth] = useState(false);
+  const [refreshToggle, setRefreshToggle] = useState(false);
 
   useEffect(() => {
-    const SendHealthCheck = async () => {
+    const sendHealthCheck = async () => {
       const params = new URLSearchParams({ endpoint: props.url });
       const result = await fetch(
         `/api/healthwidget?${params.toString()}`,
@@ -23,8 +23,8 @@ const ServerHealthWidget = (props) => {
       setHealthData(data);
     };
 
-    SendHealthCheck();
-  }, [reloadHealth]);
+    sendHealthCheck();
+  }, [refreshToggle, props.url]);
 
   return (
     <div className="widgetContainer">
@@ -34,7 +34,7 @@ const ServerHealthWidget = (props) => {
           ? `Health Status: ${healthData.status}`
           : "No data available"}
       </span>
-      <button onClick={() => setReloadHealth(!reloadHealth)}>Refresh</button>
+      <button onClick={() => setRefreshToggle(!refreshToggle)}>Refresh</button>
     </div>
   );
 };
