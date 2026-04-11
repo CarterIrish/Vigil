@@ -110,5 +110,9 @@ button:hover {
 }
 
 .statusIndicator.unhealthy{
+    background-color: rgb(223, 148, 51);
+}
+
+.statusIndicator.down{
     background-color: red;
 }

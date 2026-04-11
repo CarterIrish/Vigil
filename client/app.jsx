@@ -12,17 +12,44 @@ const App = () => {
 const ServerHealthWidget = (props) => {
   const [healthData, setHealthData] = useState(null);
   const [refreshToggle, setRefreshToggle] = useState(false);
+  const [, setFailureCount] = useState(0);
+  const [widgetStatus, setWidgetStatus] = useState("unknown");
+
+  const handleHealthFailure = (prevCount) => {
+    const newCount = prevCount + 1;
+    setWidgetStatus(newCount >= 3 ? "down" : "unhealthy");
+    return newCount;
+  };
 
   useEffect(() => {
     const sendHealthCheck = async () => {
-      const params = new URLSearchParams({ endpoint: props.url });
-      const result = await fetch(`/api/healthwidget?${params.toString()}`);
-      const data = await result.json();
-      setHealthData(data);
+      try {
+        const params = new URLSearchParams({ endpoint: props.url });
+        const result = await fetch(`/api/healthwidget?${params.toString()}`);
+        const data = await result.json();
+        setHealthData(data);
+
+        if (data.status === "healthy") {
+          setWidgetStatus("healthy");
+          setFailureCount(0);
+        } else {
+          setFailureCount(handleHealthFailure);
+        }
+      } catch (err) {
+        console.error("Error fetching health data: ", err);
+        setFailureCount(handleHealthFailure);
+      }
     };
 
     sendHealthCheck();
   }, [refreshToggle, props.url]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRefreshToggle((prev) => !prev);
+    }, 30000);
+    return () => clearInterval(interval);
+  }, [props.url]);
 
   return (
     <div className="widgetContainer">
@@ -32,9 +59,7 @@ const ServerHealthWidget = (props) => {
           ? `Health Status: ${healthData.status}`
           : "No data available"}
       </p>
-      <span
-        className={`statusIndicator ${healthData?.status === "healthy" ? "healthy" : "unhealthy"}`}
-      />
+      <span className={`statusIndicator ${widgetStatus}`} />
       <button
         className="refreshButton"
         onClick={() => setRefreshToggle(!refreshToggle)}
