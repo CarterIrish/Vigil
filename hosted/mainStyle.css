@@ -87,3 +87,13 @@ button:hover {
     width: 100%;
     margin: 0 auto;
 }
+
+.widgitContainer {
+    color: hsl(237, 23%, 15%);
+    background-color: hsl(234, 46%, 69%);
+    border: 1px dotted black;
+}
+
+.dashboardContainer {
+    border: 1px solid red;
+}
