@@ -97,3 +97,18 @@ button:hover {
 .dashboardContainer {
     border: 1px solid red;
 }
+
+.statusIndicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.statusIndicator.healthy{
+    background-color: green
+}
+
+.statusIndicator.unhealthy{
+    background-color: red;
+}
