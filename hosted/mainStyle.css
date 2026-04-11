@@ -80,3 +80,10 @@ button:hover {
     text-align: center;
     margin-top: 0.5rem;
 }
+
+.loginContainer > button {
+    display: block;
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+}

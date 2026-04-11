@@ -82,7 +82,7 @@ const LoginWindow = () => {
 const LoginPage = () => {
   const [isLogin, setisLogin] = React.useState(true);
   return (
-    <div>
+    <div className="loginContainer">
       {isLogin ? <LoginWindow /> : <SignupWindow />}
       <button onClick={() => setisLogin(!isLogin)}>
         {isLogin
