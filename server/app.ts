@@ -18,14 +18,14 @@ const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/Vigil';
 
 mongoose.connect(dbURI).catch((err) => {
     if (err) {
-        console.log('Failed to connect to MongoDB');
+        console.error('Failed to connect to MongoDB', err);
         throw err;
     }
 })
 
 const redisClient = createClient({ url: process.env.REDISCLOUD_URL });
 
-redisClient.on('error', err => console.log('Redis Client Error', err));
+redisClient.on('error', err => console.error('Redis Client Error', err));
 
 redisClient.connect().then(() => {
     const app: Express = express();

@@ -61,7 +61,7 @@ export const signup = async (req: Request, res: Response) => {
         return res.json({ redirect: '/dashboard' });
     }
     catch (err: unknown) {
-        console.log(err);
+        console.error('Error creating account:', err instanceof Error ? err.message : err);
         if ((err as MongoError).code === 11000) {
             return res.status(400).json({ error: 'Username already in use' });
         }
