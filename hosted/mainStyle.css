@@ -88,7 +88,7 @@ button:hover {
     margin: 0 auto;
 }
 
-.widgitContainer {
+.widgetContainer {
     color: hsl(237, 23%, 15%);
     background-color: hsl(234, 46%, 69%);
     border: 1px dotted black;

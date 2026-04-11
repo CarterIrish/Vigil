@@ -6,6 +6,8 @@ const router = (app: Application) => {
     
     app.get('/dashboard', middleware.secureConnect, middleware.requiresLogin, controllers.Dashboard.DashboardPage);
 
+    app.get('/api/healthwidget', middleware.secureConnect, middleware.requiresLogin, controllers.Dashboard.HealthWidget);
+
     app.get('/login', middleware.secureConnect, middleware.requiresLogout, controllers.Account.LoginPage);
     app.post('/login', middleware.secureConnect, middleware.requiresLogout, controllers.Account.login);
 
