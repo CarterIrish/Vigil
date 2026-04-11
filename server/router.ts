@@ -9,7 +9,7 @@ const router = (app: Application) => {
     app.get('/login', middleware.secureConnect, middleware.requiresLogout, controllers.Account.LoginPage);
     app.post('/login', middleware.secureConnect, middleware.requiresLogout, controllers.Account.login);
 
-    app.get('/logout', middleware.secureConnect, middleware.requiresLogin, controllers.Account.logout);
+    app.post('/logout', middleware.secureConnect, middleware.requiresLogin, controllers.Account.logout);
     
     app.post('/signup', middleware.secureConnect, middleware.requiresLogout, controllers.Account.signup);
 
