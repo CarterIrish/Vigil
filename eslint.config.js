@@ -6,7 +6,7 @@ const tsparser = require("@typescript-eslint/parser");
 module.exports = [
   js.configs.recommended,
   {
-    files: ["eslint.config.js"],
+    files: ["eslint.config.js", "webpack.config.js"],
     languageOptions: {
       globals: globals.node,
     },
@@ -15,6 +15,7 @@ module.exports = [
     files: ["client/**/*.js", "client/**/*.jsx"],
     languageOptions: {
       globals: globals.browser,
+      sourceType: 'module',
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
