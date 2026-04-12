@@ -47,7 +47,7 @@ const ServerHealthWidget = (props) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setRefreshToggle((prev) => !prev);
-    }, 30000);
+    }, 60000);
     return () => clearInterval(interval);
   }, [props.url]);
 
