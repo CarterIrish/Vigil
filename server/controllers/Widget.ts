@@ -51,7 +51,7 @@ export const createWidget = async (req: Request, res: Response) => {
                     dashboardId: req.body.dashboardId
                 });
             }
-            catch (err: Error | unknown) {
+            catch (_err: Error | unknown) {
                 return res.status(500).json({ error: 'Failed to create widget' });
             }
         }
@@ -86,7 +86,7 @@ export const deleteWidget = async (req: Request, res: Response) => {
         }
 
         return res.status(200).json({ message: 'Widget deleted successfully' });
-    } catch (err: Error | unknown) {
+    } catch (_err: Error | unknown) {
         return res.status(500).json({ error: 'Failed to delete widget' });
     }
 };

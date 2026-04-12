@@ -17,7 +17,7 @@ export const getDashboard = async (req: Request, res: Response) => {
         const dashboards = await DashboardModel.find({ owner: userId}).populate('widgets').exec();
         return res.status(200).json(dashboards);
     }
-    catch(err: Error | unknown){
+    catch(_err: Error | unknown){
         return res.status(500).json({error: 'Failed to fetch dashboards'});
     }
 };
@@ -41,7 +41,7 @@ export const createDashboard = async (req: Request, res: Response) => {
         await newDashboard.save();
         return res.status(201).json({name: newDashboard.name, id: newDashboard._id, widgets: newDashboard.widgets});
     }
-    catch(err: Error | unknown){
+    catch(_err: Error | unknown){
         return res.status(500).json({error: 'Failed to create dashboard'});
     }
 };  
