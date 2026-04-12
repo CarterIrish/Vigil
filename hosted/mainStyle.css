@@ -1,118 +1,159 @@
 /* Basic Placeholder Styles */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    line-height: 1.6;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 }
 
 header {
-    background-color: #333;
-    color: white;
-    padding: 1rem;
-    text-align: center;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  text-align: center;
 }
 
 main {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+  flex: 1;
+  display: flex;
+}
+
+/* Login page */
+main.loginPage {
+  margin: 2rem auto;
+  padding: 0 1rem;
+  flex-direction: column;
+}
+
+/* Dashboard page */
+main.dashboardPage {
+  flex-direction: row;
+  overflow: hidden;
 }
 
 footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
 }
 
 button {
-    background-color: #007bff;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
+.formSubmit:hover {                                                                                                                   
+      background-color: #0056b3;                                                                                                        
+  }
+
 .mainForm {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    max-width: 300px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 300px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .mainForm input[type="text"],
 .mainForm input[type="password"] {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .formSubmit {
-    background-color: #007bff;
-    color: white;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 #errorMessage {
-    color: red;
-    text-align: center;
-    margin-top: 0.5rem;
+  color: red;
+  text-align: center;
+  margin-top: 0.5rem;
 }
 
 .loginContainer > button {
-    display: block;
-    max-width: 300px;
-    width: 100%;
-    margin: 0 auto;
+  display: block;
+  max-width: 300px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .widgetContainer {
-    color: hsl(237, 23%, 15%);
-    background-color: hsl(234, 46%, 69%);
-    border: 1px dotted black;
+  color: hsl(237, 23%, 15%);
+  background-color: hsl(234, 46%, 69%);
+  border: 1px dotted black;
+  width: fit-content;
 }
 
 .dashboardContainer {
-    border: 1px solid red;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.widgetArea {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.sidePanel {
+  width: 250px;
+  background-color: #e0e0e0;
+  padding: 1rem;
+  flex-shrink: 0;
+  border-left: 1px solid #ccc;
 }
 
 .statusIndicator {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
 }
 
-.statusIndicator.healthy{
-    background-color: green
+.statusIndicator.healthy {
+  background-color: green;
 }
 
-.statusIndicator.unhealthy{
-    background-color: rgb(223, 148, 51);
+.statusIndicator.unhealthy {
+  background-color: rgb(223, 148, 51);
 }
 
-.statusIndicator.down{
-    background-color: red;
+.statusIndicator.down {
+  background-color: red;
+}
+
+#app {
+  flex: 1;
+  display: flex;
 }
