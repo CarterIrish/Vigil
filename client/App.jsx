@@ -6,12 +6,14 @@ import SidePanel from "./SidePanel.jsx";
 const App = () => {
   const [reloadDash, setReloadDash] = useState(false);
   const [dashboards, setDashboards] = useState([]);
+  const [activeDashboard, setActiveDashboard] = useState(null);
 
   useEffect(() => {
     const fetchDashboards = async () => {
       const response = await fetch("/api/dashboard");
       const data = await response.json();
       setDashboards(data);
+      setActiveDashboard(prev => data.find(d => d._id === prev?._id) ?? data[0]);
     };
     fetchDashboards();
   }, [reloadDash]);
@@ -20,7 +22,7 @@ const App = () => {
     <div className="dashboardContainer">
       <div className="widgetArea">
         {/* TODO: remove this hardcoded widget and replace with dynamic widget loading based on user configuration */}
-        {dashboards[0]?.widgets.map((widget) => {
+        {activeDashboard?.widgets.map((widget) => {
           switch(widget.type){
             case 'ServerHealth':
               return <ServerHealthWidget key={widget._id} url={widget.endpoint} name={widget.name} />;
@@ -29,7 +31,12 @@ const App = () => {
           }
         })}
       </div>
-      <SidePanel />
+      <SidePanel 
+        dashboards={dashboards}
+        activeDashboard={activeDashboard}
+        setActiveDashboard={setActiveDashboard}
+        setReloadDash={setReloadDash}
+      />
     </div>
   );
 };

@@ -132,6 +132,55 @@ button:hover {
   padding: 1rem;
   flex-shrink: 0;
   border-left: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sidepanelSection h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.dashboardListItem {
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dashboardListItem:hover {
+  background-color: #d0d0d0;
+}
+
+.dashboardListItem.active {
+  background-color: #bbb;
+  font-weight: bold;
+}
+
+.dashboardListItem h3 {
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+.widgetListItem {
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  border: 1px dashed #999;
+  cursor: grab;
+  background-color: #f0f0f0;
+  margin-bottom: 0.4rem;
+}
+
+.widgetListItem:hover {
+  background-color: #e8e8e8;
+}
+
+.widgetListItem h3 {
+  font-size: 0.9rem;
+  font-weight: normal;
 }
 
 .statusIndicator {
