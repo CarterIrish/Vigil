@@ -66,7 +66,17 @@ export const deleteWidget = async (req: Request, res: Response) => {
     if (!req.params.id) {
         return res.status(400).json({ error: 'Widget ID is required' });
     }
+    if (!req.query.dashboardId) {
+        return res.status(400).json({ error: 'Dashboard ID is required to disassociate widget' });
+    }
     try {
+        const doc = await DashboardModel.findOneAndUpdate(
+            { _id: req.query.dashboardId, owner: req.session.account._id },
+            { $pull: { widgets: req.params.id } },
+        );
+        if (!doc) {
+            return res.status(404).json({ error: 'Widget not found in dashboard' });
+        }
         const result = await WidgetModel.deleteOne({
             _id: req.params.id,
             owner: req.session.account._id
@@ -74,6 +84,7 @@ export const deleteWidget = async (req: Request, res: Response) => {
         if (result.deletedCount === 0) {
             return res.status(404).json({ error: 'Widget not found or not owned by user' });
         }
+
         return res.status(200).json({ message: 'Widget deleted successfully' });
     } catch (err: Error | unknown) {
         return res.status(500).json({ error: 'Failed to delete widget' });
