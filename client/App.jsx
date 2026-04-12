@@ -23,7 +23,7 @@ const App = () => {
         {dashboards[0]?.widgets.map((widget) => {
           switch(widget.type){
             case 'ServerHealth':
-              return <ServerHealthWidget key={widget._id} url={widget.endpoint} />;
+              return <ServerHealthWidget key={widget._id} url={widget.endpoint} name={widget.name} />;
             default:
               return null;
           }

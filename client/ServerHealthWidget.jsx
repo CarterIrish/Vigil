@@ -45,7 +45,8 @@ export const ServerHealthWidget = (props) => {
 
   return (
     <div className="widgetContainer">
-      <h2>Widget</h2>
+      <h2>{props.name}</h2>
+      <h3>{props.url}</h3>
       <p>
         {healthData
           ? `Health Status: ${healthData.status}`
