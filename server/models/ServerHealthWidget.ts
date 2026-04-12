@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 import WidgetModel from "./Widget";
+import {IWidget} from "./Widget";
+
+export interface IServerHealthWidget extends mongoose.Document {
+    endpoint: string;
+}
+
+export interface IServerHealthWidgetModel extends IWidget {
+    endpoint:string;
+}
 
 const ServerHealthWidgetSchema = new mongoose.Schema({
     endpoint: {

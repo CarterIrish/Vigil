@@ -1,5 +1,15 @@
 import mongoose from 'mongoose';
 
+export interface IDashboard extends mongoose.Document {
+    owner: mongoose.Types.ObjectId;
+    name: string;
+    widgets: mongoose.Types.ObjectId[];
+}
+
+export interface IDashboardModel extends mongoose.Model<IDashboard> {
+    toAPI(doc: IDashboard): { name: string; widgets: mongoose.Types.ObjectId[] };
+}
+
 const DashboardSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.ObjectId,
