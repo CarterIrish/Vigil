@@ -51,7 +51,7 @@ export const createWidget = async (req: Request, res: Response) => {
                     dashboardId: req.body.dashboardId
                 });
             }
-            catch (_err: Error | unknown) {
+            catch{
                 return res.status(500).json({ error: 'Failed to create widget' });
             }
         }
@@ -86,12 +86,12 @@ export const deleteWidget = async (req: Request, res: Response) => {
         }
 
         return res.status(200).json({ message: 'Widget deleted successfully' });
-    } catch (_err: Error | unknown) {
+    } catch {
         return res.status(500).json({ error: 'Failed to delete widget' });
     }
 };
 
-export const updateWidget = async (req: Request, res: Response) => {
+export const updateWidget = async (_req: Request, _res: Response) => {
     // TODO: Implementation for updating a widget
 };
 
@@ -104,7 +104,7 @@ export const HealthWidget = async (req: Request, res: Response) => {
         const healthResponse = await fetch(req.query.endpoint);
         const healthData = await healthResponse.json();
         res.status(200).json(healthData);
-    } catch (err: Error | unknown) {
+    } catch {
         return res.status(500).json({ error: 'Failed to fetch health data' });
     }
 
