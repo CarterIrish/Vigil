@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import ServerHealthWidget from "./ServerHealthWidget.jsx";
 import SidePanel from "./SidePanel.jsx";
 
+
+
 const App = () => {
   const [reloadDash, setReloadDash] = useState(false);
   const [dashboards, setDashboards] = useState([]);
@@ -21,7 +23,6 @@ const App = () => {
   return (
     <div className="dashboardContainer">
       <div className="widgetArea">
-        {/* TODO: remove this hardcoded widget and replace with dynamic widget loading based on user configuration */}
         {activeDashboard?.widgets.map((widget) => {
           switch(widget.type){
             case 'ServerHealth':

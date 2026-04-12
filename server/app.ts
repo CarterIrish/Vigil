@@ -1,5 +1,11 @@
 import 'dotenv/config';
 
+//* TODO: When a user session ends (30min) the session should be refreshed automtically if they are active on the page.
+//* This can be done by sending a request to the server every 25 minutes or so to keep the session alive.
+//* This will prevent users from losing their place if they leave the page open for an extended period of time. 
+//* This should only be done while window is focused to avoid keeping an active session for users who have left 
+//* the page open but are not actively using it.
+
 import path from 'path';
 import express, { Express } from 'express';
 import compression from 'compression';
