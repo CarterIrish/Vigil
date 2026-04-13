@@ -1,6 +1,9 @@
 import { createRoot } from "react-dom/client";
 import { handleError, sendPut, hideError } from "./helper";
 
+//* TODO: Pull the error message element into component and manage its state via react instead of direct DOM manipulation.
+//* This would allow for better error handling and display across the settings page, rather than relying on a single global error message element.
+
 const handlePasswordChange = (e) => {
   e.preventDefault();
   hideError();
