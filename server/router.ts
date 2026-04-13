@@ -1,4 +1,4 @@
-import * as controllers from './controllers;
+import * as controllers from './controllers';
 import { Request, Response, Application } from 'express';
 import * as middleware from './middleware';
 
