@@ -37,7 +37,7 @@ const handlePasswordChange = (e) => {
   );
 };
 
-const Settings = () => {
+const PasswordChange = () => {
   return (
     <form
       id="passwordChangeForm"
@@ -54,6 +54,12 @@ const Settings = () => {
       <input type="password" id="confirmPass" name="confirmPass" />
       <button type="submit">Update Password</button>
     </form>
+  );
+};
+
+const Settings = () => {
+  return (
+    <PasswordChange />
   );
 };
 
