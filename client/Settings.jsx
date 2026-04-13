@@ -39,27 +39,32 @@ const handlePasswordChange = (e) => {
 
 const PasswordChange = () => {
   return (
-    <form
-      id="passwordChangeForm"
-      name="passwordChangeForm"
-      action="/api/settings"
-      className="mainForm"
-      onSubmit={handlePasswordChange}
-    >
-      <label htmlFor="currentPass">Current Password: </label>
-      <input type="password" id="currentPass" name="currentPass" />
-      <label htmlFor="newPass">New Password: </label>
-      <input type="password" id="newPass" name="newPass" />
-      <label htmlFor="confirmPass">Confirm New Password: </label>
-      <input type="password" id="confirmPass" name="confirmPass" />
-      <button type="submit">Update Password</button>
-    </form>
+    <section className="settingsChangeSection">
+      <h2>Change Password</h2>
+      <form
+        id="passwordChangeForm"
+        name="passwordChangeForm"
+        action="/api/settings"
+        className="mainForm"
+        onSubmit={handlePasswordChange}
+      >
+        <label htmlFor="currentPass">Current Password: </label>
+        <input type="password" id="currentPass" name="currentPass" />
+        <label htmlFor="newPass">New Password: </label>
+        <input type="password" id="newPass" name="newPass" />
+        <label htmlFor="confirmPass">Confirm New Password: </label>
+        <input type="password" id="confirmPass" name="confirmPass" />
+        <button type="submit">Update Password</button>
+      </form>
+    </section>
   );
 };
 
 const Settings = () => {
   return (
-    <PasswordChange />
+    <div className="settingsContainer">
+      <PasswordChange />
+    </div>
   );
 };
 
