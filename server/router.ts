@@ -14,7 +14,7 @@ const router = (app: Application) => {
 
     app.post('/signup', middleware.secureConnect, middleware.requiresLogout, controllers.Account.signup);
 
-    app.get('/settings', middleware.secureConnect, middleware.requiresLogin, controllers.Account.settingsPage);
+    app.get('/settings', middleware.secureConnect, middleware.requiresLogin, controllers.Settings.settingsPage);
 
     //* API routes
     app.get('/api/healthwidget', middleware.secureConnect, middleware.requiresLogin, controllers.Widget.HealthWidget);
@@ -35,6 +35,8 @@ const router = (app: Application) => {
     app.delete('/api/dashboard/:id', middleware.secureConnect, middleware.requiresLogin, controllers.Dashboard.deleteDashboard);
     // Update dashboards
     app.put('/api/dashboard/:id', middleware.secureConnect, middleware.requiresLogin, controllers.Dashboard.updateDashboard);
+
+    app.put('/api/settings', middleware.secureConnect, middleware.requiresLogin, controllers.Settings.updateSettings);
 
     //* Default route
     app.get('/', middleware.secureConnect, middleware.requiresLogout, controllers.Account.LoginPage);

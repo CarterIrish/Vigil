@@ -7,8 +7,18 @@
     <link rel="stylesheet" href="/assets/mainStyle.css">
 </head>
 <body>
-    <h1>Settings</h1>
+    <header>
+        <h1>Vigil Settings</h1>
+        <form method="POST" action="/logout">
+            <button type="submit">Logout</button>
+        </form>
+        <a class="button" href="/dashboard">Dashboard</a>
+    </header>
     <div id="app"></div>
+    <p id="errorMessage" style="display:none;"></p>
+    <footer>
+        <p>Copyright &copy; 2024 Vigil. All rights reserved.</p>
+    </footer>
     <script src="/assets/settingsBundle.js"></script>
 </body>
 </html>

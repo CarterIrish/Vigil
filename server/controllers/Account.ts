@@ -9,10 +9,6 @@ export const LoginPage = (req: Request, res: Response) => {
     res.render('login');
 }
 
-export const settingsPage = (req: Request, res: Response) => {
-    res.render('settings');
-}
-
 export const login = (req: Request, res: Response) => {
     const username = `${req.body.username}`;
     const pass = `${req.body.pass}`;

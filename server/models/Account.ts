@@ -5,12 +5,14 @@ export interface IAccount extends mongoose.Document {
     username: string;
     password: string;
     createdAt: Date;
+    validatePassword(password: string): Promise<boolean | string>;
 }
 
 export interface IAccountModel extends mongoose.Model<IAccount> {
     generateHash(password: string): Promise<string>;
     authenticate(username: string, password: string, callback: (err?: Error | null, doc?: IAccount) => void): Promise<void>;
     toAPI(doc: IAccount): { username: string; _id: mongoose.Types.ObjectId };
+    validatePassword(document: IAccount, password: string): Promise<boolean | string>;
 }
 
 const saltRounds = 10;
@@ -44,8 +46,8 @@ AccountSchema.statics.toAPI = (doc) => (
 
 
 
-AccountSchema.statics.generateHash = (password) => bcrypt.hash(password, saltRounds);
-AccountSchema.statics.authenticate = async (username, password, callback) => {
+AccountSchema.statics.generateHash = (password:string) => bcrypt.hash(password, saltRounds);
+AccountSchema.statics.authenticate = async (username:string, password:string, callback: (err?: Error | null, doc?: IAccount) => void) => {
     try {
         const doc = await AccountModel.findOne({ username }).exec();
         if (!doc) {
@@ -57,9 +59,19 @@ AccountSchema.statics.authenticate = async (username, password, callback) => {
         }
         return callback();
     } catch (err) {
-        return callback(err);
+        return callback(err instanceof Error ? err : new Error('Unknown error'));
     }
 };
+
+AccountSchema.methods.validatePassword = async function (password: string): Promise<boolean | string> {
+    try{
+        const match = await bcrypt.compare(password, this.password);
+        return match;
+    }
+    catch(err: unknown){
+        return err instanceof Error ? err.message : 'Unknown error';
+    }
+}
 
 AccountModel = mongoose.model<IAccount, IAccountModel>('Account', AccountSchema);
 export default AccountModel;
