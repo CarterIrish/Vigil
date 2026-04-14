@@ -63,10 +63,32 @@ const PasswordChange = () => {
   );
 };
 
+  const handleSubscriptionChange = async (tier) => {
+    // sendPut('/api/settings', { tier, type: 'subscriptionChange' });
+    console.log('Subcription Change');
+  };
+
+  const SubscriptionChange = () => {
+    return (
+      <section className="settingsChangeSection">
+        <h2>Change Your Subscription</h2>
+        <div className="tierOptions">
+          <button className="tierBtn" onClick={() => handleSubscriptionChange('Free')}>
+            Free
+          </button>
+          <button className="tierBtn" onClick={() => handleSubscriptionChange('Premium')}>
+            Premium
+          </button>
+        </div>
+      </section>
+    );
+  };
+
 const Settings = () => {
   return (
     <div className="settingsContainer">
       <PasswordChange />
+      <SubscriptionChange />
     </div>
   );
 };
