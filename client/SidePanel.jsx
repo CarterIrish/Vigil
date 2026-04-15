@@ -1,3 +1,14 @@
+import { useDraggable } from "@dnd-kit/react";
+
+const DraggableWidget = (props) => {
+  const {ref} = useDraggable({id:props.widgetId})
+  return (
+    <div className="widgetListItem" ref={ref}>
+      <h3>{props.name}</h3>
+    </div>
+  );
+}
+
 export const SidePanel = ({
   dashboards,
   activeDashboard,
@@ -28,9 +39,7 @@ export const SidePanel = ({
       <div className="sidepanelSection">
         <h2>Your Widgets</h2>
         <div className="widgetList">
-          <div className="widgetListItem">
-            <h3>Server Health</h3>
-          </div>
+          <DraggableWidget widgetId="ServerHealth" label="Server Health" />
         </div>
       </div>
     </div>
