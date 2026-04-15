@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-export const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) => {
+const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) => {
   const [name, setName] = useState("");
   const [endpoint, setEndpoint] = useState("");
+  const [error, setError] = useState(null);
 
   const renderFields = () => {
     switch (widgetType) {
@@ -13,7 +14,6 @@ export const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) 
             <input
               type="text"
               id="endpoint"
-              name="endpoint"
               value={endpoint}
               onChange={(e) => setEndpoint(e.target.value)}
               required
@@ -28,17 +28,22 @@ export const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) 
 
   const handleAddWidget = async (e) => {
     e.preventDefault();
-    const body = {type: widgetType, name, dashboardId};
-    if(widgetType === 'ServerHealth') body.endpoint = endpoint;
+    setError(null);
+    const body = { type: widgetType, name, dashboardId };
+    if (widgetType === "ServerHealth") body.endpoint = endpoint;
 
-    const response = await fetch('/api/widget', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(body)
+    const response = await fetch("/api/widget", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
     });
-    if(response.status === 201) {
+
+    if (response.status === 201) {
       onSuccess();
       onClose();
+    } else {
+      const data = await response.json();
+      setError(data.error ?? "Failed to add widget");
     }
   };
 
@@ -46,29 +51,20 @@ export const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) 
     <div className="modalBackdrop" onMouseDown={onClose}>
       <div className="modal" onMouseDown={(e) => e.stopPropagation()}>
         <h2>Add {widgetType} Widget</h2>
-        <form
-          id="addWidgetForm"
-          onSubmit={(e) => handleAddWidget(e)}
-          name="addWidgetForm"
-          action="/api/widget"
-          method="POST"
-          className="addWidgetModal"
-        >
+        <form className="addWidgetModal" onSubmit={handleAddWidget}>
           <label htmlFor="widgetName">Widget Name</label>
           <input
             type="text"
             id="widgetName"
-            name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
           {renderFields()}
+          {error && <p className="formError">{error}</p>}
           <div className="modalButtons">
             <button type="submit">Add Widget</button>
-            <button type="button" onClick={onClose}>
-              Cancel
-            </button>
+            <button type="button" onClick={onClose}>Cancel</button>
           </div>
         </form>
       </div>

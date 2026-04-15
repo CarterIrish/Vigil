@@ -19,6 +19,24 @@ export const SidePanel = ({
 }) => {
   const [isAddingDash, setAddingDash] = useState(false);
   const [newDashName, setNewDashName] = useState("");
+  const [dashError, setDashError] = useState(null);
+
+  const handleAddDash = async () => {
+    setDashError(null);
+    const res = await fetch("/api/dashboard", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: newDashName }),
+    });
+    if (res.status === 201) {
+      setReloadDash((prev) => !prev);
+      setAddingDash(false);
+      setNewDashName("");
+    } else {
+      const data = await res.json();
+      setDashError(data.error ?? "Failed to create dashboard");
+    }
+  };
 
   return (
     <div className="sidePanel">
@@ -30,7 +48,6 @@ export const SidePanel = ({
             width="24"
             height="24"
             fill="currentColor"
-            className="bi bi-plus"
             viewBox="0 0 16 16"
           >
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
@@ -44,20 +61,8 @@ export const SidePanel = ({
               value={newDashName}
               onChange={(e) => setNewDashName(e.target.value)}
             />
-            <button
-              onClick={async () => {
-                const res = await fetch("api/dashboard", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ name: newDashName }),
-                });
-                if (res.status === 201) setReloadDash((prev) => !prev);
-                setAddingDash(false);
-                setNewDashName("");
-              }}
-            ></button>
+            <button onClick={handleAddDash}>Add</button>
+            {dashError && <p className="formError">{dashError}</p>}
           </div>
         )}
         <div className="dashboardList">

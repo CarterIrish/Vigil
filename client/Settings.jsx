@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import { useState } from "react";
 import { handleError, sendPut, hideError } from "./helper";
 
 //* TODO: Pull the error message element into component and manage its state via react instead of direct DOM manipulation.
@@ -63,26 +64,55 @@ const PasswordChange = () => {
   );
 };
 
+const SubscriptionChange = () => {
+  const initialTier = document.getElementById('app').dataset.subscriptionTier;
+  const [currentTier, setCurrentTier] = useState(initialTier);
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
+
   const handleSubscriptionChange = async (tier) => {
-    sendPut('/api/settings', { subscriptionTier: tier, type: 'subscriptionChange' });
-    console.log(`Subscription Change: ${tier}`);
+    if (tier === currentTier) return;
+    setMessage(null);
+    setError(null);
+
+    const res = await fetch('/api/settings', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subscriptionTier: tier, type: 'subscriptionChange' }),
+    });
+    const data = await res.json();
+
+    if (res.status === 200) {
+      setCurrentTier(tier);
+      setMessage(data.message);
+    } else {
+      setError(data.error ?? 'Failed to update subscription');
+    }
   };
 
-  const SubscriptionChange = () => {
-    return (
-      <section className="settingsChangeSection">
-        <h2>Change Your Subscription</h2>
-        <div className="tierOptions">
-          <button className="tierBtn" onClick={() => handleSubscriptionChange('free')}>
-            Free
-          </button>
-          <button className="tierBtn" onClick={() => handleSubscriptionChange('pro')}>
-            Pro
-          </button>
-        </div>
-      </section>
-    );
-  };
+  return (
+    <section className="settingsChangeSection">
+      <h2>Change Your Subscription</h2>
+      <p>Current plan: <strong>{currentTier}</strong></p>
+      <div className="tierOptions">
+        <button
+          className={`tierBtn ${currentTier === 'free' ? 'active' : ''}`}
+          onClick={() => handleSubscriptionChange('free')}
+        >
+          Free
+        </button>
+        <button
+          className={`tierBtn ${currentTier === 'pro' ? 'active' : ''}`}
+          onClick={() => handleSubscriptionChange('pro')}
+        >
+          Pro
+        </button>
+      </div>
+      {message && <p className="formSuccess">{message}</p>}
+      {error && <p className="formError">{error}</p>}
+    </section>
+  );
+};
 
 const Settings = () => {
   return (

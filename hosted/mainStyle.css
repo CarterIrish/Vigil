@@ -116,6 +116,23 @@ button:hover, .button:hover {
   margin-top: 0.5rem;
 }
 
+.formError {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.formSuccess {
+  color: green;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.tierBtn.active {
+  background-color: #0056b3;
+  font-weight: bold;
+}
+
 .loginContainer > button {
   display: block;
   max-width: 300px;
