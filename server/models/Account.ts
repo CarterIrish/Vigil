@@ -43,12 +43,10 @@ const AccountSchema = new mongoose.Schema({
     }
 });
 
-AccountSchema.statics.toAPI = (doc) => (
-    {
-        username: doc.username,
-        _id: doc._id
-    }
-);
+AccountSchema.statics.toAPI = (doc: IAccount) => ({
+    username: doc.username,
+    _id: doc._id
+});
 
 
 

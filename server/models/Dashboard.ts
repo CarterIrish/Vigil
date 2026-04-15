@@ -27,7 +27,7 @@ const DashboardSchema = new mongoose.Schema({
     }]
 });
 
-DashboardSchema.statics.toAPI = (doc) => ({
+DashboardSchema.statics.toAPI = (doc: IDashboard) => ({
     name: doc.name,
     widgets: doc.widgets
 });

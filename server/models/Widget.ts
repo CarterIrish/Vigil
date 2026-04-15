@@ -33,7 +33,7 @@ const WidgetSchema = new mongoose.Schema({
     },
 }, { discriminatorKey: 'type' });
 
-WidgetSchema.statics.toAPI = (doc) => ({
+WidgetSchema.statics.toAPI = (doc: IWidget) => ({
     name: doc.name,
     type: doc.type,
 });
