@@ -64,8 +64,8 @@ const PasswordChange = () => {
 };
 
   const handleSubscriptionChange = async (tier) => {
-    // sendPut('/api/settings', { tier, type: 'subscriptionChange' });
-    console.log('Subcription Change');
+    sendPut('/api/settings', { subscriptionTier: tier, type: 'subscriptionChange' });
+    console.log(`Subscription Change: ${tier}`);
   };
 
   const SubscriptionChange = () => {

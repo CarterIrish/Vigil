@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 export interface IAccount extends mongoose.Document {
     username: string;
     password: string;
+    subscriptionTier: 'free' | 'pro';
     createdAt: Date;
     validatePassword(password: string): Promise<boolean | string>;
 }
@@ -30,6 +31,11 @@ const AccountSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    subscriptionTier: {
+        type: String,
+        enum: ['free', 'pro'],
+        default: 'free'
     },
     createdAt: {
         type: Date,

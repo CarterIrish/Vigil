@@ -39,10 +39,35 @@ const updatePassword = async (req: Request, res: Response) => {
 
 }
 
+const updateSubscription = async (req: Request, res: Response) => {
+    const sessionAccount = req.session.account;
+    if (!sessionAccount) { return res.status(401).json({ error: 'Unauthorized' }); }
+
+    const newTier: string = `${req.body.subscriptionTier}`;
+    const validTiers = ['free', 'pro'];
+    if (!validTiers.includes(newTier)) { return res.status(400).json({ error: 'Invalid subscription tier' }); }
+
+    try {
+        const doc = await Account.findById(sessionAccount._id).exec();
+        if (!doc) { return res.status(404).json({ error: 'Account not found' }); }
+
+        doc.subscriptionTier = newTier as 'free' | 'pro';
+        await doc.save();
+        return res.status(200).json({ message: 'Subscription tier updated successfully' });
+    } catch (err: unknown) {
+        console.error('Error updating subscription tier:', err instanceof Error ? err.message : err);
+        return res.status(500).json({ error: 'An error occurred while updating the subscription tier' });
+    }
+}
+
 export const updateSettings = (req: Request, res: Response) => {
     switch (req.body.type) {
         case ('passwordChange'): {
             updatePassword(req, res);
+            break;
+        }
+        case ('subscriptionChange'): {
+            updateSubscription(req, res);
             break;
         }
         default: {
