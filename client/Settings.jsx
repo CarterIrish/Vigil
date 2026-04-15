@@ -73,11 +73,11 @@ const PasswordChange = () => {
       <section className="settingsChangeSection">
         <h2>Change Your Subscription</h2>
         <div className="tierOptions">
-          <button className="tierBtn" onClick={() => handleSubscriptionChange('Free')}>
+          <button className="tierBtn" onClick={() => handleSubscriptionChange('free')}>
             Free
           </button>
-          <button className="tierBtn" onClick={() => handleSubscriptionChange('Premium')}>
-            Premium
+          <button className="tierBtn" onClick={() => handleSubscriptionChange('pro')}>
+            Pro
           </button>
         </div>
       </section>
