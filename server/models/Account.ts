@@ -12,7 +12,7 @@ export interface IAccount extends mongoose.Document {
 export interface IAccountModel extends mongoose.Model<IAccount> {
     generateHash(password: string): Promise<string>;
     authenticate(username: string, password: string, callback: (err?: Error | null, doc?: IAccount) => void): Promise<void>;
-    toAPI(doc: IAccount): { username: string; _id: mongoose.Types.ObjectId };
+    toAPI(doc: IAccount): { username: string; subcriptionTier: string; _id: mongoose.Types.ObjectId };
     validatePassword(document: IAccount, password: string): Promise<boolean | string>;
 }
 
@@ -45,6 +45,7 @@ const AccountSchema = new mongoose.Schema({
 
 AccountSchema.statics.toAPI = (doc: IAccount) => ({
     username: doc.username,
+    subscriptionTier: doc.subscriptionTier,
     _id: doc._id
 });
 

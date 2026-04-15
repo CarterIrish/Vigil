@@ -28,6 +28,7 @@ export const createWidget = async (req: Request, res: Response) => {
                 return res.status(400).json({ error: 'Endpoint is required for ServerHealth widget' });
             }
             try {
+                
                 const widgetData = { ...baseData, endpoint: req.body.endpoint };
                 const dashboard = await DashboardModel.findOne({
                     _id: req.body.dashboardId,

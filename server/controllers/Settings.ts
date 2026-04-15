@@ -40,8 +40,8 @@ const updatePassword = async (req: Request, res: Response) => {
 }
 
 const updateSubscription = async (req: Request, res: Response) => {
-    const sessionAccount = req.session.account;
-    if (!sessionAccount) { return res.status(401).json({ error: 'Unauthorized' }); }
+    let sessionAccount;
+    if (!(sessionAccount = req.session.account)) { return res.status(401).json({ error: 'Unauthorized' }); }
 
     const newTier = `${req.body.subscriptionTier}`;
     const isValidTier = (tier: string): tier is 'free' | 'pro' => tier === 'free' || tier === 'pro';
@@ -53,6 +53,7 @@ const updateSubscription = async (req: Request, res: Response) => {
 
         doc.subscriptionTier = newTier;
         await doc.save();
+        req.session.account.subscriptionTier = newTier; // Add tier to redis session
         return res.status(200).json({ message: 'Subscription tier updated successfully' });
     } catch (err: unknown) {
         console.error('Error updating subscription tier:', err instanceof Error ? err.message : err);
