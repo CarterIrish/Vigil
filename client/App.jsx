@@ -53,7 +53,7 @@ const App = () => {
     >
       <div className="dashboardContainer">
         <WidgetArea widgets={activeDashboard?.widgets ?? []} />
-        {pendingWidgetType && (
+        {pendingWidgetType && activeDashboard && (
           <AddWidgetModal
             widgetType={pendingWidgetType}
             dashboardId={activeDashboard._id}
@@ -61,6 +61,7 @@ const App = () => {
             onSuccess={() => setReloadDash((prev) => !prev)}
           />
         )}
+        
         <SidePanel
           dashboards={dashboards}
           activeDashboard={activeDashboard}

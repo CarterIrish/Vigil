@@ -1,13 +1,15 @@
 import { useDraggable } from "@dnd-kit/react";
-
+import { useState } from "react";
 const DraggableWidget = (props) => {
-  const {ref} = useDraggable({id:props.widgetId})
+  const { ref } = useDraggable({
+    id: props.widgetId,
+  });
   return (
     <div className="widgetListItem" ref={ref}>
       <h3>{props.label}</h3>
     </div>
   );
-}
+};
 
 export const SidePanel = ({
   dashboards,
@@ -15,10 +17,49 @@ export const SidePanel = ({
   setActiveDashboard,
   setReloadDash,
 }) => {
+  const [isAddingDash, setAddingDash] = useState(false);
+  const [newDashName, setNewDashName] = useState("");
+
   return (
     <div className="sidePanel">
       <div className="sidepanelSection">
         <h2>Dashboards</h2>
+        <button onClick={() => setAddingDash(true)}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="currentColor"
+            className="bi bi-plus"
+            viewBox="0 0 16 16"
+          >
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+          </svg>
+        </button>
+        {isAddingDash && (
+          <div className="addDashInput">
+            <input
+              type="text"
+              placeholder="Dashboard name"
+              value={newDashName}
+              onChange={(e) => setNewDashName(e.target.value)}
+            />
+            <button
+              onClick={async () => {
+                const res = await fetch("api/dashboard", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ name: newDashName }),
+                });
+                if (res.status === 201) setReloadDash((prev) => !prev);
+                setAddingDash(false);
+                setNewDashName("");
+              }}
+            ></button>
+          </div>
+        )}
         <div className="dashboardList">
           {dashboards.map((dash) => {
             return (
@@ -39,7 +80,11 @@ export const SidePanel = ({
       <div className="sidepanelSection">
         <h2>Your Widgets</h2>
         <div className="widgetList">
-          <DraggableWidget widgetId="ServerHealth" label="Server Health" />
+          {dashboards.length === 0 ? (
+            <p>Create a dashboard to add widgets</p>
+          ) : (
+            <DraggableWidget widgetId="ServerHealth" label="Server Health" />
+          )}
         </div>
       </div>
     </div>
