@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Account from '../models/Account';
 
 export const settingsPage = (req: Request, res: Response) => {
-    res.render('settings', { subscriptionTier: req.session.account.subscriptionTier });
+    res.render('settings', { subscriptionTier: req.session.account?.subscriptionTier });
 }
 
 const updatePassword = async (req: Request, res: Response) => {
