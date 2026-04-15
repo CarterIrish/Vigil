@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import WidgetModel from '../models/Widget';
 import ServerHealthWidgetModel from '../models/ServerHealthWidget';
 import DashboardModel from '../models/Dashboard';
+import { FREE_TIER_LIMITS } from '../config/accountLimits';
 //* Controllers for generic widget operations
 
 export const createWidget = async (req: Request, res: Response) => {
@@ -21,6 +22,13 @@ export const createWidget = async (req: Request, res: Response) => {
         type: req.body.type,
         owner: req.session.account._id
     };
+
+    if(req.session.account.subscriptionTier === 'free') {
+        const count = await WidgetModel.countDocuments({ owner: req.session.account._id });
+        if (count >= FREE_TIER_LIMITS.widgets) {
+            return res.status(403).json({ error: 'Free tier is limited to 2 widgets. Upgrade to Pro for unlimited widgets.' });
+        }
+    }
 
     switch (baseData.type) {
         case 'ServerHealth': {
