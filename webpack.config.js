@@ -17,12 +17,12 @@ module.exports = {
             },
         ],
     },
-    mode: 'production',
-    watchOptions: {
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development', watchOptions: {
         aggregateTimeout: 200,
     },
     output: {
         path: path.resolve(__dirname, 'hosted'),
         filename: '[name]Bundle.js',
     },
+    devtool: process.env.NODE_ENV === 'production' ? false : 'cheap-module-source-map',
 };
