@@ -75,3 +75,5 @@ export const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) 
     </div>
   );
 };
+
+export default AddWidgetModal;
