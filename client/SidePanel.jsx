@@ -4,7 +4,7 @@ const DraggableWidget = (props) => {
   const {ref} = useDraggable({id:props.widgetId})
   return (
     <div className="widgetListItem" ref={ref}>
-      <h3>{props.name}</h3>
+      <h3>{props.label}</h3>
     </div>
   );
 }
