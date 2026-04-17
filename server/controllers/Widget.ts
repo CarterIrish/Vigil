@@ -23,7 +23,7 @@ export const createWidget = async (req: Request, res: Response) => {
         owner: req.session.account._id
     };
 
-    if(req.session.account.subscriptionTier === 'free') {
+    if (req.session.account.subscriptionTier === 'free') {
         const count = await WidgetModel.countDocuments({ owner: req.session.account._id });
         if (count >= FREE_TIER_LIMITS.widgets) {
             return res.status(403).json({ error: 'Free tier is limited to 2 widgets. Upgrade to Pro for unlimited widgets.' });
@@ -36,7 +36,7 @@ export const createWidget = async (req: Request, res: Response) => {
                 return res.status(400).json({ error: 'Endpoint is required for ServerHealth widget' });
             }
             try {
-                
+
                 const widgetData = { ...baseData, endpoint: req.body.endpoint };
                 const dashboard = await DashboardModel.findOne({
                     _id: req.body.dashboardId,
@@ -60,7 +60,7 @@ export const createWidget = async (req: Request, res: Response) => {
                     dashboardId: req.body.dashboardId
                 });
             }
-            catch(err: unknown){
+            catch (err: unknown) {
                 return res.status(500).json({ error: 'Failed to create widget', errorDetails: err instanceof Error ? err.message : 'Unknown error' });
             }
         }
@@ -95,13 +95,52 @@ export const deleteWidget = async (req: Request, res: Response) => {
         }
 
         return res.status(200).json({ message: 'Widget deleted successfully' });
-    } catch(err: unknown) {
+    } catch (err: unknown) {
         return res.status(500).json({ error: 'Failed to delete widget', errorDetails: err instanceof Error ? err.message : 'Unknown error' });
     }
 };
 
-export const updateWidget = async (_req: Request, _res: Response) => {
-    // TODO: Implementation for updating a widget
+export const updateWidget = async (req: Request, res: Response) => {
+    if (!req.session || !req.session.account) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    if (!req.params.id) {
+        return res.status(400).json({ error: 'Widget ID is required' });
+    }
+    if (!req.body.name) {
+        return res.status(400).json({ error: 'Widget name is required' });
+    }
+
+    const widget = await WidgetModel.findOne({ _id: req.params.id, owner: req.session.account._id });
+    if (!widget) {
+        return res.status(404).json({ error: 'Widget not found or not owned by user' });
+    }
+
+    const baseData = {
+        name: req.body.name
+    }
+    try {
+        switch (widget.type) {
+            case 'ServerHealth': {
+                if (!req.body.endpoint) {
+                    return res.status(400).json({ error: 'Endpoint is required for ServerHealth widget' });
+                }
+                const updateData = { ...baseData, endpoint: req.body.endpoint };
+                const doc = await ServerHealthWidgetModel.findOneAndUpdate(
+                    { _id: req.params.id, owner: req.session.account._id },
+                    updateData,
+                    { returnDocument: 'after', runValidators: true }
+                )
+                if (!doc) {
+                    return res.status(404).json({ error: 'Widget not found or not owned by user' });
+                }
+                return res.status(200).json({ name: doc.name, type: doc.type, endpoint: doc.endpoint, id: doc._id });
+            }
+            default: return res.status(500).json({ error: 'Unknown widget type' });
+        }
+    } catch (err: unknown) {
+        return res.status(500).json({ error: 'Failed to update widget', errorDetails: err instanceof Error ? err.message : 'Unknown error' });
+    }
 };
 
 //* Custom Widget Controllers
@@ -113,7 +152,7 @@ export const HealthWidget = async (req: Request, res: Response) => {
         const healthResponse = await fetch(req.query.endpoint);
         const healthData = await healthResponse.json();
         res.status(200).json(healthData);
-    } catch (err: unknown){
+    } catch (err: unknown) {
         return res.status(500).json({ error: 'Failed to fetch health data', errorDetails: err instanceof Error ? err.message : 'Unknown error' });
     }
 

@@ -4,9 +4,12 @@ import ServerHealthWidget from "./ServerHealthWidget.jsx";
 import SidePanel from "./SidePanel.jsx";
 import { DragDropProvider, useDroppable } from "@dnd-kit/react";
 import AddWidgetModal from "./AddWidgetModal.jsx";
+import EditWidgetModal from "./EditWidgetModal.jsx";
 
-const WidgetArea = ({ widgets }) => {
+const WidgetArea = ({ widgets, setReloadDash, activeDashboard }) => {
   const { ref } = useDroppable({ id: "widgetArea" });
+  const [selectedWidget, setSelectedWidget] = useState(null);
+
   return (
     <div className="widgetArea" ref={ref}>
       {widgets.map((widget) => {
@@ -17,12 +20,21 @@ const WidgetArea = ({ widgets }) => {
                 key={widget._id}
                 url={widget.endpoint}
                 name={widget.name}
+                onEdit={() => setSelectedWidget(widget)}
               />
             );
           default:
             return null;
         }
       })}
+      {selectedWidget && activeDashboard && (
+        <EditWidgetModal
+          widget={selectedWidget}
+          dashboardId={activeDashboard._id}
+          onClose={() => setSelectedWidget(null)}
+          onSuccess={() => setReloadDash((prev) => !prev)}
+        />
+      )}
     </div>
   );
 };
@@ -52,7 +64,7 @@ const App = () => {
       }}
     >
       <div className="dashboardContainer">
-        <WidgetArea widgets={activeDashboard?.widgets ?? []} />
+        <WidgetArea widgets={activeDashboard?.widgets ?? []} setReloadDash={setReloadDash} activeDashboard={activeDashboard} />
         {pendingWidgetType && activeDashboard && (
           <AddWidgetModal
             widgetType={pendingWidgetType}
