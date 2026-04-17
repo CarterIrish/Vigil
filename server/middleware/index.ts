@@ -26,4 +26,11 @@ export const requiresLogout = (req: Request, res: Response, next: NextFunction) 
     return next();
 }
 
+export const requireBody = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.body) {
+        return res.status(400).json({ error: 'Request body required' });
+    }
+    return next();
+}
+
 export const secureConnect = process.env.NODE_ENV === 'production' ? requiresSecure : bypassSecure;

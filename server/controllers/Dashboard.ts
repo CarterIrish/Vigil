@@ -8,7 +8,6 @@ export const DashboardPage = (req: Request, res: Response) => {
 
 //* Controllers for dashboard operations
 export const getDashboard = async (req: Request, res: Response) => {
-    // TODO: Implementation for fetching dashboard data
     if (!req.session || !req.session.account) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
@@ -58,7 +57,37 @@ export const deleteDashboard = async (_req: Request, _res: Response) => {
     // TODO: Implementation for deleting a dashboard
 };
 
-export const updateDashboard = async (_req: Request, _res: Response) => {
-    // TODO: Implementation for updating a dashboard
+export const updateDashboard = async (req: Request, res: Response) => {
+    if (!req.session || !req.session.account) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    if (!req.params.id) {
+        return res.status(400).json({ error: 'Dashboard ID is required' });
+    }
+    if (!req.body.name) {
+        return res.status(400).json({ error: 'Dashboard name is required' });
+    }
+
+    const dashboard = await DashboardModel.findOne({ _id: req.params.id, owner: req.session.account._id });
+    if (!dashboard) {
+        return res.status(404).json({ error: 'Dashboard not found' });
+    }
+
+    try {
+        const doc = await DashboardModel.findOneAndUpdate(
+            { _id: req.params.id, owner: req.session.account._id },
+            { name: req.body.name },
+            { returnDocument: 'after', runValidators: true }
+        );
+        if (!doc) {
+            return res.status(404).json({ error: 'Dashboard not found or not owned by user' });
+        }
+        return res.status(200).json({ name: doc.name, id: doc._id, widgets: doc.widgets });
+    } catch (err: unknown) {
+        if (err instanceof Error && 'code' in err && err.code === 11000) {
+            return res.status(409).json({ error: 'Dashboard with this name already exists' });
+        }
+        return res.status(500).json({ error: 'Failed to update dashboard', errorDetails: err instanceof Error ? err.message : 'Unknown error' });
+    }
 };
 
