@@ -1,24 +1,29 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vigil - Dashboard</title>
-    <link rel="stylesheet" href="/assets/mainStyle.css" />
-  </head>
-  <body>
-    <header>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vigil - Dashboard</title>
+  <link rel="stylesheet" href="/assets/mainStyle.css" />
+</head>
+
+<body>
+  <header>
+    <div class='headerLogo'>
       <h1>Vigil Dashboard</h1>
-      <form method="POST" action="/logout">
-        <button type="submit">Logout</button>
-      </form>
+    </div>
+    <nav class="headerNav">
       <a class="button" href="/settings">Settings</a>
-    </header>
-    <main class="dashboardPage">
-      <div id="app"></div>
-    </main>
-    <footer>
-      <p>Copyright &copy; 2026 Vigil. All rights reserved.</p>
-    </footer>
-    <script src="/assets/appBundle.js"></script>
-  </body>
+      <a class="button" href="/logout">Logout</a>
+    </nav>
+  </header>
+  <main class="dashboardPage">
+    <div id="app"></div>
+  </main>
+  <footer>
+    <p>Copyright &copy; 2026 Vigil. All rights reserved.</p>
+  </footer>
+  <script src="/assets/appBundle.js"></script>
+</body>
+
 </html>
