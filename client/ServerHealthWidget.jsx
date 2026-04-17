@@ -47,12 +47,14 @@ export const ServerHealthWidget = (props) => {
     <div className="widgetContainer">
       <h2>{props.name}</h2>
       <h3>{props.url}</h3>
-      <p>
-        {healthData
-          ? `Health Status: ${healthData.status}`
-          : "No data available"}
-      </p>
-      <span className={`statusIndicator ${widgetStatus}`} />
+      <div className="widgetStatusRow">
+        <span className={`statusIndicator ${widgetStatus}`} />
+        <p>
+          {healthData
+            ? `Health Status: ${healthData.status}`
+            : "No data available"}
+        </p>
+      </div>
       <button
         className="refreshButton"
         onClick={() => setRefreshToggle(!refreshToggle)}

@@ -147,3 +147,6 @@ hosted/loginBundle.js
 hosted/settingsBundle.js
 hosted/*Bundle.js
 hosted/*.LICENSE.txt
+hosted/appBundle.js.map
+hosted/loginBundle.js.map
+hosted/settingsBundle.js.map
