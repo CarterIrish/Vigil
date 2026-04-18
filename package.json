@@ -1,6 +1,6 @@
 {
   "name": "vigil",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A dashboard application that allows users to define custom endpoints for widgets such as server health &amp; statistics. Users also have access to collection of custom widgets that create a complete user experience.",
   "main": "server/app.ts",
   "scripts": {
