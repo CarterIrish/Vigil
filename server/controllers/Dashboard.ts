@@ -55,7 +55,6 @@ export const createDashboard = async (req: Request, res: Response) => {
 };
 
 export const deleteDashboard = async (req: Request, res: Response) => {
-    console.log('Delete dashboard request received for ID:', req.params.id);
     if (!req.session || !req.session.account) {
         return res.status(401).json({ error: 'Unauthorized' });
     }

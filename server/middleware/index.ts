@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 
 
 export const requiresSecure = (req: Request, res: Response, next: NextFunction) => {
-    console.log('Secure connect middleware invoked for URL:', req.url, 'with protocol:', req.headers['x-forwarded-proto']);
     if (req.headers['x-forwarded-proto'] !== 'https') {
         return res.redirect(`https://${req.hostname}${req.url}`);
     }
@@ -14,7 +13,6 @@ export const bypassSecure = (req: Request, res: Response, next: NextFunction) =>
 }
 
 export const requiresLogin = (req: Request, res: Response, next: NextFunction) => {
-    console.log('Requires login middleware invoked for URL: ', req.url, 'Session account:', req.session ? req.session.account : 'No session');
     if(!req.session.account){
         return res.redirect('/login');
     }
