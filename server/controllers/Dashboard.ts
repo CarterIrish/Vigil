@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import DashboardModel from '../models/Dashboard';
 import { FREE_TIER_LIMITS } from '../config/accountLimits';
-
+import mongoose from 'mongoose';
+import WidgetModel from '../models/Widget';
 export const DashboardPage = (req: Request, res: Response) => {
     res.render('dashboard');
 }
@@ -53,8 +54,42 @@ export const createDashboard = async (req: Request, res: Response) => {
     }
 };
 
-export const deleteDashboard = async (_req: Request, _res: Response) => {
-    // TODO: Implementation for deleting a dashboard
+export const deleteDashboard = async (req: Request, res: Response) => {
+    console.log('Delete dashboard request received for ID:', req.params.id);
+    if (!req.session || !req.session.account) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    if (!req.params.id) {
+        return res.status(400).json({ error: 'Dashboard ID is required' });
+    }
+    if (mongoose.isValidObjectId(req.params.id) === false) {
+        return res.status(400).json({ error: 'Invalid Dashboard ID' });
+    }
+    const dashboard = await DashboardModel.findOne({ _id: req.params.id, owner: req.session.account._id });
+    if (!dashboard) {
+        return res.status(404).json({ error: 'Dashboard not found' });
+    }
+
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+            await WidgetModel.deleteMany(
+                { _id: { $in: dashboard.widgets }, owner: req.session.account!._id },
+                { session }
+            );
+            await DashboardModel.deleteOne(
+                { _id: req.params.id, owner: req.session.account!._id },
+                { session }
+            );
+        });
+        return res.status(200).json({ message: 'Dashboard deleted successfully' });
+    }
+    catch (err: unknown) {
+        return res.status(500).json({ error: 'Failed to delete dashboard', errorDetails: err instanceof Error ? err.message : 'Unknown error' });
+    }
+    finally {
+        await session.endSession();
+    }
 };
 
 export const updateDashboard = async (req: Request, res: Response) => {
@@ -63,6 +98,9 @@ export const updateDashboard = async (req: Request, res: Response) => {
     }
     if (!req.params.id) {
         return res.status(400).json({ error: 'Dashboard ID is required' });
+    }
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).json({ error: 'Invalid Dashboard ID' });
     }
     if (!req.body.name) {
         return res.status(400).json({ error: 'Dashboard name is required' });

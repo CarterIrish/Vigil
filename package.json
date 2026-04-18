@@ -4,9 +4,10 @@
   "description": "A dashboard application that allows users to define custom endpoints for widgets such as server health &amp; statistics. Users also have access to collection of custom widgets that create a complete user experience.",
   "main": "server/app.ts",
   "scripts": {
-    "dev": "concurrently \"webpack watch\" \"npx nodemon --watch server --exec tsx server/app.ts\"",
+    "predev": "kill-port 3000",
+    "dev": "concurrently --kill-others-on-fail \"webpack watch\" \"npx nodemon --signal SIGTERM --watch server --exec tsx server/app.ts\"",
     "build": "webpack",
-    "start": "node dist/app.js",
+    "start": "tsx server/app.ts",
     "heroku-postbuild": "tsc && webpack",
     "pretest": "eslint ./server --fix",
     "test": "echo \"All tests completed\""
@@ -42,6 +43,7 @@
     "concurrently": "^9.2.1",
     "eslint": "^10.1.0",
     "globals": "^17.4.0",
+    "kill-port": "^2.0.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tsx": "^4.21.0",
