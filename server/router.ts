@@ -38,6 +38,12 @@ const router = (app: Application) => {
 
     app.put('/api/settings', middleware.secureConnect, middleware.requiresLogin, middleware.requireBody, controllers.Settings.updateSettings);
 
+
+    //* Example server health check routes
+    app.get('/api/demo/healthy', controllers.Demo.healthy);
+    app.get('/api/demo/unhealthy', controllers.Demo.unhealthy);
+    app.get('/api/demo/flaky', controllers.Demo.flaky);
+
     //* Default route
     app.get('/', middleware.secureConnect, middleware.requiresLogout, controllers.Account.LoginPage);
 
