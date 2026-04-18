@@ -7,7 +7,7 @@
     "predev": "kill-port 3000",
     "dev": "concurrently --kill-others-on-fail \"webpack watch\" \"npx nodemon --signal SIGTERM --watch server --exec tsx server/app.ts\"",
     "build": "webpack",
-    "start": "tsx server/app.ts",
+    "start": "node server/app.ts",
     "heroku-postbuild": "tsc && webpack",
     "pretest": "eslint ./server --fix",
     "test": "echo \"All tests completed\""
