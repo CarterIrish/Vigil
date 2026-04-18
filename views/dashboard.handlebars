@@ -14,7 +14,9 @@
     </div>
     <nav class="headerNav">
       <a class="button" href="/settings">Settings</a>
-      <a class="button" href="/logout">Logout</a>
+      <form action="/logout" method="POST" style="display:inline;">
+        <button type="submit" class="button">Logout</button>
+      </form>
     </nav>
   </header>
   <main class="dashboardPage">
