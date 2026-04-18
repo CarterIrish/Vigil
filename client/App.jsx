@@ -44,17 +44,17 @@ const App = () => {
   const [dashboards, setDashboards] = useState([]);
   const [activeDashboard, setActiveDashboard] = useState(null);
   const [pendingWidgetType, setPendingWidgetType] = useState(null);
-  useEffect(() => {
-    const fetchDashboards = async () => {
-      const response = await fetch("/api/dashboard");
-      const data = await response.json();
-      setDashboards(data);
-      setActiveDashboard(
-        (prev) => data.find((d) => d._id === prev?._id) ?? data[0],
-      );
-    };
-    fetchDashboards();
-  }, [reloadDash]);
+
+  const fetchDashboards = async () => {
+    const response = await fetch("/api/dashboard");
+    const data = await response.json();
+    setDashboards(data);
+    setActiveDashboard(
+      (prev) => data.find((d) => d._id === prev?._id) ?? data[0],
+    );
+  };
+
+  useEffect(() => {fetchDashboards();}, [reloadDash]);
 
   return (
     <DragDropProvider
@@ -64,7 +64,11 @@ const App = () => {
       }}
     >
       <div className="dashboardContainer">
-        <WidgetArea widgets={activeDashboard?.widgets ?? []} setReloadDash={setReloadDash} activeDashboard={activeDashboard} />
+        <WidgetArea
+          widgets={activeDashboard?.widgets ?? []}
+          setReloadDash={setReloadDash}
+          activeDashboard={activeDashboard}
+        />
         {pendingWidgetType && activeDashboard && (
           <AddWidgetModal
             widgetType={pendingWidgetType}
@@ -73,12 +77,13 @@ const App = () => {
             onSuccess={() => setReloadDash((prev) => !prev)}
           />
         )}
-        
+
         <SidePanel
           dashboards={dashboards}
           activeDashboard={activeDashboard}
           setActiveDashboard={setActiveDashboard}
           setReloadDash={setReloadDash}
+          fetchDashboards={fetchDashboards}
         />
       </div>
     </DragDropProvider>
