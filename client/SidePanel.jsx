@@ -1,5 +1,9 @@
 import { useDraggable } from "@dnd-kit/react";
 import { useState } from "react";
+import { createPortal } from "react-dom";
+
+import DeleteDashboardModal from "./DeleteDashboardModal.jsx";
+
 const DraggableWidget = (props) => {
   const { ref } = useDraggable({
     id: props.widgetId,
@@ -59,6 +63,7 @@ export const SidePanel = ({
   const [newDashName, setNewDashName] = useState("");
   const [dashError, setDashError] = useState(null);
   const [editingDashId, setEditingDashId] = useState(null);
+  const [deletingDashId, setDeletingDashId] = useState(null);
 
   const handleAddDash = async () => {
     setDashError(null);
@@ -144,31 +149,67 @@ export const SidePanel = ({
                 )}
 
                 {editingDashId !== dash._id && (
-                  <button
-                    className="editDashButton"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setEditingDashId(dash._id);
-                    }}
-                    aria-label="Edit dashboard"
-                  >
-                    <svg
-                      width="20px"
-                      height="20px"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
+                  <>
+                    <button
+                      className="editDashButton"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingDashId(dash._id);
+                      }}
+                      aria-label="Edit dashboard"
                     >
-                      <path
-                        d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54A.484.484 0 0 0 13.82 2h-3.84a.49.49 0 0 0-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.63 8.47a.49.49 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 0 1 8.4 12 3.6 3.6 0 0 1 12 8.4a3.6 3.6 0 0 1 3.6 3.6 3.6 3.6 0 0 1-3.6 3.6z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        width="20px"
+                        height="20px"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54A.484.484 0 0 0 13.82 2h-3.84a.49.49 0 0 0-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.63 8.47a.49.49 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 0 1 8.4 12 3.6 3.6 0 0 1 12 8.4a3.6 3.6 0 0 1 3.6 3.6 3.6 3.6 0 0 1-3.6 3.6z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      className="deleteDashButton"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log(
+                          "Delete button clicked for dashboard ID:",
+                          dash._id,
+                        );
+                        setDeletingDashId(dash._id);
+                      }}
+                      aria-label="Delete dashboard"
+                    >
+                      <svg
+                        width="20px"
+                        height="20px"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                  </>
                 )}
               </div>
             );
           })}
         </div>
+        {deletingDashId &&
+          createPortal(
+            <DeleteDashboardModal
+              name={dashboards.find((d) => d._id === deletingDashId)?.name}
+              dashboardId={deletingDashId}
+              onClose={() => setDeletingDashId(null)}
+              onSuccess={async () => { await fetchDashboards(); setDeletingDashId(null);}}
+            />,
+            document.body,
+          )}
       </div>
       <div className="sidepanelSection">
         <h2>Your Widgets</h2>

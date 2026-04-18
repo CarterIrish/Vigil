@@ -301,3 +301,31 @@ button:hover, .button:hover {
 .modalButtons button[type="button"]:hover {
   background-color: #888;
 }
+
+#deleteButton{
+  background-color: #ff080088;
+  border: 2px solid #ff0800b6;
+  color: white;
+  transition: background-color 0.15s ease;
+}
+
+#deleteButton:hover:not(:disabled){
+  background-color: #ff0800cc;
+}
+
+#deleteButton:disabled,
+.modalButtons button[type="button"]:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dashboardNameHighlight{
+  color: #ff0800b6;
+  font-weight: 600;
+}
+
+.modalError{
+  color: #ff0800b6;
+  font-size: 0.85rem;
+  margin: 0;
+}
