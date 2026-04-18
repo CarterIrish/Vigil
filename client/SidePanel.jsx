@@ -74,6 +74,7 @@ export const SidePanel = ({
                 key={dash._id}
                 className={`dashboardListItem ${activeDashboard?._id === dash._id ? "active" : ""}`}
                 onClick={() => {
+                  if(activeDashboard._id === dash._id) return;
                   setActiveDashboard(dash);
                   setReloadDash((prev) => !prev);
                 }}
