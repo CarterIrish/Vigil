@@ -103,6 +103,15 @@ export const SidePanel = ({
               onChange={(e) => setNewDashName(e.target.value)}
             />
             <button onClick={handleAddDash}>Add</button>
+            <button
+              onClick={() => {
+                setAddingDash(false);
+                setNewDashName("");
+                setDashError(null);
+              }}
+            >
+              Cancel
+            </button>
             {dashError && <p className="formError">{dashError}</p>}
           </div>
         )}
