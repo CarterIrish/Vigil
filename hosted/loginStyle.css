@@ -1,13 +1,23 @@
 :root {
-    --primary-color: rgb(255, 249, 240);
-    --secondary-color: rgb(255,249,340);
-    --accent-color: rgba(88, 236, 255, 0.853);
+    --color-paper: #faf8f3;
+    --color-sub-bg: #f0ede5;
+    --color-ink: #141210;
+    --color-mute: #8a857a;
+    --color-line: #cbc6bc;
+    --color-accent: oklch(0.55 0.18 197);
+    --color-accent-soft: oklch(0.92 0.04 197);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
 body {
-    background-color: var(--primary-color);
-    /* height: 100vh;
-    width: 100vw; */
+    background-color: var(--color-paper);
+    width: 100vw;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,21 +26,66 @@ body {
 
 
 #app {
-    border: 1px solid black;
-    min-width: 25vw;
-    height: 50vh;
+    border: 1px solid var(--color-line);
+    width: min(56rem, 92vw);
+    min-height: 26rem;
     display: grid;
+
     grid-template-columns: 1fr 1fr;
     grid-template-areas: 'sidebar loginSignup';
 }
 
 #loginFlavorText {
     grid-area: sidebar;
-    background-color: var(--secondary-color);
+    background-color: var(--color-sub-bg);
+    border-right: 1px solid var(--color-line);
     width: 100%;
     height: 100%;
 }
 
+#loginFlavorText .logo {
+    width: 100%;
+    height: auto;
+    max-width: 10rem;
+    margin: 1rem auto auto .5rem;
+}
+
+.tagline p {
+    color: var(--color-ink);
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-align: center;
+}
+
 .loginContainer {
     grid-area: loginSignup;
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 22rem);
+    gap: 1rem;
+    margin: auto;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginForm,
+#signupForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#loginForm input[type="text"],
+#loginForm input[type="password"],
+#signupForm input[type="text"],
+#signupForm input[type="password"] {
+    width: 100%;
+}
+
+.loginContainer > button,
+#loginForm .formSubmit,
+#signupForm .formSubmit {
+    width: 100%;
 }
