@@ -54,7 +54,9 @@ const App = () => {
     );
   };
 
-  useEffect(() => {fetchDashboards();}, [reloadDash]);
+  useEffect(() => {
+    fetchDashboards();
+  }, [reloadDash]);
 
   return (
     <DragDropProvider
@@ -64,6 +66,13 @@ const App = () => {
       }}
     >
       <div className="dashboardContainer">
+        <SidePanel
+          dashboards={dashboards}
+          activeDashboard={activeDashboard}
+          setActiveDashboard={setActiveDashboard}
+          setReloadDash={setReloadDash}
+          fetchDashboards={fetchDashboards}
+        />
         <WidgetArea
           widgets={activeDashboard?.widgets ?? []}
           setReloadDash={setReloadDash}
@@ -77,14 +86,6 @@ const App = () => {
             onSuccess={() => setReloadDash((prev) => !prev)}
           />
         )}
-
-        <SidePanel
-          dashboards={dashboards}
-          activeDashboard={activeDashboard}
-          setActiveDashboard={setActiveDashboard}
-          setReloadDash={setReloadDash}
-          fetchDashboards={fetchDashboards}
-        />
       </div>
     </DragDropProvider>
   );
