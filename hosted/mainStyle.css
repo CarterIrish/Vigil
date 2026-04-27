@@ -108,3 +108,14 @@ button.primary:hover,
   color: #fff;
   filter: brightness(1.1);
 }
+
+.mainForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 20rem;
+  margin: 2rem auto;
+  padding: 1.25rem;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+}
