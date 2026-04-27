@@ -341,9 +341,20 @@ button.primary:hover,
   box-shadow: 0 0 0 2px var(--color-accent-soft);
 }
 
-.addDashInput button,
-.renameDashInput button {
-  align-self: flex-end;
+.addDashInput input,
+.renameDashInput input {
   padding: 0.5rem 0.75rem;
   font-size: 0.875rem;
+}
+
+.addDashInput input:focus-visible,
+.renameDashInput input:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-soft);
+}
+
+.addDashInput button,
+.renameDashInput button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
 }
