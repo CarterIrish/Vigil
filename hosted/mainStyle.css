@@ -158,3 +158,20 @@ button.primary:hover,
   font-size: 0.75rem;
   margin-top: 0.25rem;
 }
+
+#app {
+  display:flex;
+  flex: 1;
+}
+
+.dashboardContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  background: var(--color-paper);
+}
+
+.widgetArea {
+  flex: 1;
+  padding: 1.5rem;
+}
