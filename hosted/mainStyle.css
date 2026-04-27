@@ -39,3 +39,27 @@ footer {
   color: var(--color-mute);
   text-align: center;
 }
+
+main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+main.dashboardPage {
+  flex-direction: row;
+  overflow: hidden;
+}
+
+main.settingsPage {
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+main.notFoundPage {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+}
