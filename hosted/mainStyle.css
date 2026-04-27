@@ -82,3 +82,31 @@ button,
     color 120ms ease,
     filter 120ms ease;
 }
+
+button:hover,
+ .button:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+button:focus-visible,
+ .button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+button.primary,
+.button.primary,
+.formSubmit {
+  background: var(--color-accent);
+  border-color: transparent;
+  color: #fff;
+}
+
+button.primary:hover,
+ .button.primary:hover,
+ .formSubmit:hover {
+  background: var(--color-accent);
+  color: #fff;
+  filter: brightness(1.1);
+}
