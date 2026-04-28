@@ -406,4 +406,62 @@ button.primary:hover,
   background-color: var(--color-down);
 }
 
+/* Modals */
+.modalBackdrop {
+  position: fixed;
+  height: 100dvh;
+  width: 100dvw;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
 
+.modal {
+  background: var(--color-paper);
+  border: 1px solid var(--color-ink);
+  padding: 1.5rem;
+  width: min(30rem, 90%);
+  max-width: 100%;
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.modal h2 {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.addWidgetModal,
+.editWidgetModal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.deleteButton {
+  background: var(--color-danger);
+  border-color: transparent;
+  color: #fff;
+  transition: background 120ms ease;
+}
+
+.deleteButton:hover {
+  filter: brightness(1.1);
+}
+
+.dashboardNameHighlight,
+.modalError {
+  color: var(--color-danger);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.4px;
+}

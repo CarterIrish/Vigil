@@ -29,6 +29,7 @@
   --color-warn: #f59e0b;
   --color-down: #ef4444;
   --color-error: #ef4444;
+  --color-danger: #ef4444;
   --color-error-soft: light-dark(
     rgba(239, 68, 68, 0.08),
     rgba(239, 68, 68, 0.18)

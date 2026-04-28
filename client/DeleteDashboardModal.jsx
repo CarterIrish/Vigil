@@ -52,7 +52,7 @@ const DeleteDashboardModal = ({ dashboardId, onClose, onSuccess, name }) => {
           </button>
           <button
             type="button"
-            id="deleteButton"
+            className="deleteButton"
             onClick={handleDelete}
             disabled={isDeleting}
           >
