@@ -21,7 +21,8 @@
 
   /* ── Accent (highlight / interactive) ────── */
   --color-accent: oklch(0.55 0.18 197);
-  --color-accent-soft: oklch(50.216% 0.045 197.9);
+  --color-accent-soft: light-dark(rgba(75, 125, 161, 0.226), rgba(147, 197, 233, 0.226));
+  --color-hover-bg: light-dark(rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.04));
 
   /* ── Status ──────────────────────────────── */
   --color-ok: #10b981;

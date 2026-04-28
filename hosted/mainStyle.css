@@ -8,6 +8,7 @@ body {
   line-height: 1.5;
 }
 
+/* Page Main Elements */
 header {
   padding: 0.75rem 1.5rem;
   background: var(--color-paper);
@@ -62,6 +63,7 @@ main.notFoundPage {
   padding: 2rem;
 }
 
+/* Global Buttons */
 button,
 .button {
   font-family: var(--font-sans);
@@ -110,6 +112,7 @@ button.primary:hover,
   filter: brightness(1.1);
 }
 
+/* Form Helpers */
 .mainForm {
   display: flex;
   flex-direction: column;
@@ -165,6 +168,7 @@ button.primary:hover,
   flex: 1;
 }
 
+/* Dashboard Layout */
 .dashboardContainer {
   display: flex;
   flex: 1;
@@ -177,6 +181,7 @@ button.primary:hover,
   padding: 1.5rem;
 }
 
+/* Side Panel */
 .sidePanel {
   width: 18rem;
   flex-shrink: 0;
@@ -232,6 +237,7 @@ button.primary:hover,
   width: 2rem;
 }
 
+/* Dashboard List */
 .dashboardList {
   display: flex;
   flex-direction: column;
@@ -241,9 +247,9 @@ button.primary:hover,
   position: relative;
   padding: 0.5rem 0.75rem;         
   margin-bottom: 0.25rem;           
-  font-size: 0.8125rem;
+  font-size: 1rem;
   color: var(--color-ink);
-  border-left: 4px solid transparent;
+  border-left: 3px solid transparent;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -253,7 +259,7 @@ button.primary:hover,
 }
 
 .dashboardListItem:hover {
-  background: var(--color-mute);
+  background: var(--color-hover-bg);
 }
 
 .dashboardListItem.active {
@@ -264,7 +270,7 @@ button.primary:hover,
 
 .dashboardListItem h3 {
   font-weight: 500;
-  font-size: 0.8125rem;
+  font-size: 1rem;
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -341,20 +347,63 @@ button.primary:hover,
   box-shadow: 0 0 0 2px var(--color-accent-soft);
 }
 
-.addDashInput input,
-.renameDashInput input {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-}
-
-.addDashInput input:focus-visible,
-.renameDashInput input:focus-visible {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px var(--color-accent-soft);
-}
-
 .addDashInput button,
 .renameDashInput button {
   padding: 0.25rem 0.75rem;
   font-size: 0.75rem;
 }
+
+.widgetList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.widgetListItem {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-paper);
+  font-size: 0.75rem;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: border-color 120ms ease;
+}
+
+.widgetListItem:hover{
+  border-color: var(--color-ink);
+}
+
+.widgetListItem:active {
+  cursor: grabbing;
+}
+
+.widgetListItem h3 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Status Indicators */
+.statusIndicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 999px;
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: var(--color-mute);
+}
+
+.statusIndicator.healthy {
+  background-color: var(--color-ok);
+}
+
+.statusIndicator.unhealthy {
+  background-color: var(--color-warn);
+}
+
+.statusIndicator.down{
+  background-color: var(--color-down);
+}
+
+
