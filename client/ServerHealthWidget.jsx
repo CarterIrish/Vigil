@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 export const ServerHealthWidget = (props) => {
-  const [healthData, setHealthData] = useState(null);
   const [refreshToggle, setRefreshToggle] = useState(false);
   const [, setFailureCount] = useState(0);
   const [widgetStatus, setWidgetStatus] = useState("unknown");
@@ -18,7 +17,6 @@ export const ServerHealthWidget = (props) => {
         const params = new URLSearchParams({ endpoint: props.url });
         const result = await fetch(`/api/healthwidget?${params.toString()}`);
         const data = await result.json();
-        setHealthData(data);
 
         if (data.status === "healthy") {
           setWidgetStatus("healthy");
@@ -43,14 +41,14 @@ export const ServerHealthWidget = (props) => {
   }, [props.url]);
 
   return (
-    <div className="widgetContainer">
+    <>
       <h2 className="serverHealthTitle">{props.name}</h2>
       <h3 className="serverHealthUrl">{props.url}</h3>
       <div className="widgetStatusRow">
         <span className={`statusIndicator ${widgetStatus}`} />
         <p>
-          {healthData
-            ? `Health Status: ${healthData.status}`
+          {widgetStatus
+            ? `Health Status: ${widgetStatus}`
             : "No data available"}
         </p>
       </div>
@@ -94,7 +92,7 @@ export const ServerHealthWidget = (props) => {
           </svg>
         </button>
       </div>
-    </div>
+    </>
   );
 };
 

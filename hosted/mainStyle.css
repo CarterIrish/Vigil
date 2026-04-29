@@ -199,8 +199,11 @@ button.primary:hover,
   padding: var(--space-card);
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   min-height: 0;
+  min-width: 0;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Side Panel */
@@ -486,4 +489,56 @@ button.primary:hover,
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.4px;
+}
+
+.serverHealthTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+.serverHealthUrl {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-mute);
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.widgetStatusRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.825rem;
+}
+.widgetOptions{
+  margin-top:auto;
+  margin-right: .5rem;
+  margin-left:auto;
+  display:flex;
+  gap:0.5rem;
+}
+
+.widgetOptions button {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--color-line);
+  background: transparent;
+  color: var(--color-mute);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.widgetOptions button:hover {
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.widgetOptions button svg {
+  width: 1.25rem;
+  height: 1.25rem;
 }
