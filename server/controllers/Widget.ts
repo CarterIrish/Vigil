@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import WidgetModel from '../models/Widget';
 import ServerHealthWidgetModel from '../models/ServerHealthWidget';
+import ClockWidgetModel from '../models/ClockWidget';
 import DashboardModel from '../models/Dashboard';
 import { FREE_TIER_LIMITS } from '../config/accountLimits';
 //* Controllers for generic widget operations
@@ -56,6 +57,38 @@ export const createWidget = async (req: Request, res: Response) => {
                     name: newWidget.name,
                     type: newWidget.type,
                     endpoint: newWidget.endpoint,
+                    id: newWidget._id,
+                    dashboardId: req.body.dashboardId
+                });
+            }
+            catch (err: unknown) {
+                return res.status(500).json({ error: 'Failed to create widget', errorDetails: err instanceof Error ? err.message : 'Unknown error' });
+            }
+        }
+        case 'Clock': {
+            if (!req.body.timezone || !req.body.format) {
+                return res.status(400).json({ error: 'Timezone and format are required for Clock widget' });
+            }
+            try {
+                const widgetData = { ...baseData, timezone: req.body.timezone, format: req.body.format };
+                const dashboard = await DashboardModel.findOne({
+                    _id: req.body.dashboardId,
+                    owner: req.session.account._id
+                });
+                if (!dashboard) {
+                    return res.status(404).json({ error: 'Dashboard not found' });
+                }
+                const newWidget = new ClockWidgetModel(widgetData);
+                await newWidget.save();
+                await DashboardModel.findOneAndUpdate(
+                    { _id: req.body.dashboardId, owner: req.session.account._id },
+                    { $push: { widgets: newWidget._id } },
+                );
+                return res.status(201).json({
+                    name: newWidget.name,
+                    type: newWidget.type,
+                    timezone: newWidget.timezone,
+                    format: newWidget.format,
                     id: newWidget._id,
                     dashboardId: req.body.dashboardId
                 });
@@ -135,6 +168,27 @@ export const updateWidget = async (req: Request, res: Response) => {
                     return res.status(404).json({ error: 'Widget not found or not owned by user' });
                 }
                 return res.status(200).json({ name: doc.name, type: doc.type, endpoint: doc.endpoint, id: doc._id });
+            }
+            case 'Clock': {
+                if (!req.body.timezone || !req.body.format) {
+                    return res.status(400).json({ error: 'Timezone and format are required for Clock widget' });
+                }
+                const updateData = { ...baseData, timezone: req.body.timezone, format: req.body.format };
+                const doc = await ClockWidgetModel.findOneAndUpdate(
+                    { _id: req.params.id, owner: req.session.account._id },
+                    updateData,
+                    { returnDocument: 'after', runValidators: true }
+                )
+                if (!doc) {
+                    return res.status(404).json({ error: 'Widget not found or not owned by user' });
+                }
+                return res.status(200).json({
+                    name: doc.name,
+                    type: doc.type,
+                    timezone: doc.timezone,
+                    format: doc.format,
+                    id: doc._id
+                });
             }
             default: return res.status(500).json({ error: 'Unknown widget type' });
         }
