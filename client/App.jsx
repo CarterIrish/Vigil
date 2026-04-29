@@ -13,19 +13,33 @@ const WidgetArea = ({ widgets, setReloadDash, activeDashboard }) => {
   return (
     <div className="widgetArea" ref={ref}>
       {widgets.map((widget) => {
+        let widgetContent;
         switch (widget.type) {
           case "ServerHealth":
-            return (
+            widgetContent = (
               <ServerHealthWidget
-                key={widget._id}
                 url={widget.endpoint}
                 name={widget.name}
                 onEdit={() => setSelectedWidget(widget)}
               />
             );
+            break;
           default:
             return null;
         }
+        if(!widgetContent) return null;
+        return (
+          <div
+            key={widget._id}
+            className="widgetContainer"
+            style={{
+              gridColumn: `span ${widget.w ?? 1}`,
+              gridRow: `span ${widget.h ?? 1}`,
+            }}
+          >
+            {widgetContent}
+          </div>
+        );
       })}
       {selectedWidget && activeDashboard && (
         <EditWidgetModal
