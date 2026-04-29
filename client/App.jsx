@@ -5,6 +5,7 @@ import SidePanel from "./SidePanel.jsx";
 import { DragDropProvider, useDroppable } from "@dnd-kit/react";
 import AddWidgetModal from "./AddWidgetModal.jsx";
 import EditWidgetModal from "./EditWidgetModal.jsx";
+import ClockWidget from "./ClockWidget.jsx";
 
 const WidgetArea = ({ widgets, setReloadDash, activeDashboard }) => {
   const { ref } = useDroppable({ id: "widgetArea" });
@@ -20,6 +21,16 @@ const WidgetArea = ({ widgets, setReloadDash, activeDashboard }) => {
               <ServerHealthWidget
                 url={widget.endpoint}
                 name={widget.name}
+                onEdit={() => setSelectedWidget(widget)}
+              />
+            );
+            break;
+          case 'Clock':
+            widgetContent = (
+              <ClockWidget
+                name={widget.name}
+                timezone={widget.timezone}
+                format={widget.format}
                 onEdit={() => setSelectedWidget(widget)}
               />
             );
