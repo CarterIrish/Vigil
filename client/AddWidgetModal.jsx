@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { US_TIMEZONES } from "./constants/timezones.js";
 
 const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) => {
   const [name, setName] = useState("");
   const [endpoint, setEndpoint] = useState("");
+  const [timezone, setTimezone] = useState("");
+  const [format, setFormat] = useState("24h");
   const [error, setError] = useState(null);
 
   const renderFields = () => {
@@ -21,6 +24,35 @@ const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) => {
             />
           </>
         );
+      case "Clock":
+        return (
+          <>
+            <label htmlFor="timezone">Timezone</label>
+            <select
+              id="timezone"
+              value={timezone}
+              onChange={(e) => setTimezone(e.target.value)}
+            >
+              <option value="" disabled>
+                Select timezone
+              </option>
+              {US_TIMEZONES.map((tz) => (
+                <option key={tz.value} value={tz.value}>
+                  {tz.label}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="format">Time Format</label>
+            <select
+              id="format"
+              value={format}
+              onChange={(e) => setFormat(e.target.value)}
+            >
+              <option value="12h">12-hour</option>
+              <option value="24h">24-hour</option>
+            </select>
+          </>
+        );
       default:
         return null;
     }
@@ -31,6 +63,10 @@ const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) => {
     setError(null);
     const body = { type: widgetType, name, dashboardId };
     if (widgetType === "ServerHealth") body.endpoint = endpoint;
+    if (widgetType === "Clock") {
+      body.timezone = timezone;
+      body.format = format;
+    }
 
     const response = await fetch("/api/widget", {
       method: "POST",
@@ -64,7 +100,9 @@ const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) => {
           {error && <p className="formError">{error}</p>}
           <div className="modalButtons">
             <button type="submit">Add Widget</button>
-            <button type="button" onClick={onClose}>Cancel</button>
+            <button type="button" onClick={onClose}>
+              Cancel
+            </button>
           </div>
         </form>
       </div>

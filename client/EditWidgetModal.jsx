@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { US_TIMEZONES } from "./constants/timezones.js";
 
 const EditWidgetModal = ({
   widget,
@@ -8,6 +9,8 @@ const EditWidgetModal = ({
 }) => {
   const [name, setName] = useState(widget.name);
   const [endpoint, setEndpoint] = useState(widget.endpoint);
+  const [timezone, setTimezone] = useState(widget.timezone);
+  const [format, setFormat] = useState(widget.format);
   const [error, setError] = useState(null);
 
   const renderFields = () => {
@@ -25,6 +28,35 @@ const EditWidgetModal = ({
             />
           </>
         );
+      case "Clock":
+        return (
+          <>
+            <label htmlFor="timezone">Timezone</label>
+            <select
+              id="timezone"
+              value={timezone}
+              onChange={(e) => setTimezone(e.target.value)}
+            >
+              <option value="" disabled>
+                Select timezone
+              </option>
+              {US_TIMEZONES.map((tz) => (
+                <option key={tz.value} value={tz.value}>
+                  {tz.label}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="format">Time Format</label>
+            <select
+              id="format"
+              value={format}
+              onChange={(e) => setFormat(e.target.value)}
+            >
+              <option value="12h">12-hour</option>
+              <option value="24h">24-hour</option>
+            </select>
+          </>
+        );
       default:
         return null;
     }
@@ -34,7 +66,13 @@ const EditWidgetModal = ({
     e.preventDefault();
     setError(null);
 
-    const body = { name: name, endpoint: endpoint };
+    const body = { name: name};
+
+    if(widget.type === "ServerHealth") body.endpoint = endpoint;
+    if(widget.type === "Clock") {
+      body.timezone = timezone;
+      body.format = format;
+    }
 
     const response = await fetch(`/api/widget/${widget._id}`, {
       method: "PUT",

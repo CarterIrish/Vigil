@@ -18,6 +18,7 @@ export const ClockWidget = (props) => {
   return (
     <>
       <h2 className="clockTitle">{props.name}</h2>
+      <p className='clockLocation'>{props.timezone}</p>
       <p className="clockTime">{time}</p>
       <p className="clockDate">{date}</p>
       <div className="widgetOptions">
