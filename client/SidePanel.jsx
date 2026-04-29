@@ -206,7 +206,10 @@ export const SidePanel = ({
               name={dashboards.find((d) => d._id === deletingDashId)?.name}
               dashboardId={deletingDashId}
               onClose={() => setDeletingDashId(null)}
-              onSuccess={async () => { await fetchDashboards(); setDeletingDashId(null);}}
+              onSuccess={async () => {
+                await fetchDashboards();
+                setDeletingDashId(null);
+              }}
             />,
             document.body,
           )}
@@ -217,7 +220,10 @@ export const SidePanel = ({
           {dashboards.length === 0 ? (
             <p>Create a dashboard to add widgets</p>
           ) : (
-            <DraggableWidget widgetId="ServerHealth" label="Server Health" />
+            <>
+              <DraggableWidget widgetId="ServerHealth" label="Server Health" />
+              <DraggableWidget widgetId="Clock" label="Clock" />
+            </>
           )}
         </div>
       </div>

@@ -491,16 +491,18 @@ button.primary:hover,
   letter-spacing: 0.4px;
 }
 
-.serverHealthTitle {
+.widgetTitle {
   font-size: 1rem;
   font-weight: 600;
   white-space: nowrap;
   overflow:hidden;
+  line-height: 1.4;
   text-overflow: ellipsis;
 }
 .serverHealthUrl {
   font-family: var(--font-mono);
   font-size: 0.75rem;
+  line-height: 1.2;
   color: var(--color-mute);
   white-space:nowrap;
   overflow: hidden;
@@ -541,4 +543,28 @@ button.primary:hover,
 .widgetOptions button svg {
   width: 1.25rem;
   height: 1.25rem;
+}
+
+/* Clock Widget */
+
+.clockTime {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin-top: auto;
+}
+
+.clockLocation {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-mute);
+}
+
+.clockDate {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-mute);
+  margin-bottom: auto;
 }

@@ -17,7 +17,7 @@ const WidgetSchema = new mongoose.Schema({
     type: {
         type: String,
         required: true,
-        enum: ['ServerHealth', 'Weather'],
+        enum: ['ServerHealth', 'Weather', 'Clock'],
     },
     name: {
         type: String,
