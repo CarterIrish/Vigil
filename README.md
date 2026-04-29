@@ -28,57 +28,57 @@ Vigil sits between a browser homepage and a heavier monitoring stack like Grafan
 
 ## Tech Stack
 
-| Layer       | Technology                                  |
-| ----------- | ------------------------------------------- |
-| Runtime     | Node.js                                     |
-| Server      | Express 5 (TypeScript)                      |
-| Templating  | express-handlebars                          |
-| Frontend    | React 19                                    |
-| Build       | Webpack + Babel + tsc                       |
-| Drag/Drop   | @dnd-kit/react                              |
-| Database    | MongoDB via Mongoose (discriminator schema) |
-| Sessions    | Redis (connect-redis)                       |
-| Auth        | bcrypt password hashing                     |
-| Linting     | ESLint                                      |
-| CI          | GitHub Actions                              |
-| Deployment  | Heroku                                      |
+| Layer      | Technology                                  |
+| ---------- | ------------------------------------------- |
+| Runtime    | Node.js                                     |
+| Server     | Express 5 (TypeScript)                      |
+| Templating | express-handlebars                          |
+| Frontend   | React 19                                    |
+| Build      | Webpack + Babel + tsc                       |
+| Drag/Drop  | @dnd-kit/react                              |
+| Database   | MongoDB via Mongoose (discriminator schema) |
+| Sessions   | Redis (connect-redis)                       |
+| Auth       | bcrypt password hashing                     |
+| Linting    | ESLint                                      |
+| CI         | GitHub Actions                              |
+| Deployment | Heroku                                      |
 
 ## Architecture
 
 ```
 client/
-  App.jsx                  Dashboard root + WidgetArea grid
-  ServerHealthWidget.jsx   Polling + status logic
-  ClockWidget.jsx          Local time renderer
-  AddWidgetModal.jsx       Type-dispatched create form
-  EditWidgetModal.jsx      Type-dispatched edit form
-  SidePanel.jsx            Dashboard list + draggable widget catalog
-  DeleteDashboardModal.jsx Portal-rendered confirmation
-  Login.jsx                Login + signup
-  Settings.jsx             Password change + subscription toggle
-  helper.js                Shared fetch helpers
-  constants/
-    timezones.js           Continental US IANA list
-
-server/
-  app.ts                   Express boot + middleware + Redis + Mongo
-  router.ts                Route definitions
-  controllers/
-    Account.ts             Login, signup, logout
-    Dashboard.ts           Dashboard CRUD
-    Widget.ts              Widget CRUD + health proxy
-    Settings.ts            Password + tier change
-    Demo.ts                Public demo endpoints
-  models/
-    Account.ts             User accounts (bcrypt, tier)
-    Dashboard.ts           Per-user dashboards
-    Widget.ts              Discriminator base schema (type, name, w, h)
-    ServerHealthWidget.ts  Discriminator: + endpoint
-    ClockWidget.ts         Discriminator: + timezone, format
-  middleware/              secureConnect, requiresLogin, requiresLogout, requireBody
-
-views/                     Handlebars templates (login, dashboard, settings, notFound)
-hosted/                    Static assets (tokens.css, mainStyle.css, loginStyle.css)
+  App.jsx                       Dashboard root + WidgetArea grid
+  ServerHealthWidget.jsx        Polling + status logic
+  ClockWidget.jsx               Local time renderer
+  AddWidgetModal.jsx            Type-dispatched create form
+  EditWidgetModal.jsx           Type-dispatched edit form
+  SidePanel.jsx                 Dashboard list + draggable widget catalog
+  DeleteDashboardModal.jsx      Portal-rendered confirmation
+  Login.jsx                     Login + signup
+  Settings.jsx                  Password change + subscription toggle
+  helper.js                     Shared fetch helpers
+  constants/      
+    timezones.js                Continental US IANA list
+      
+server/     
+  app.ts                        Express boot + middleware + Redis + Mongo
+  router.ts                     Route definitions
+  controllers/      
+    Account.ts                  Login, signup, logout
+    Dashboard.ts                Dashboard CRUD
+    Widget.ts                   Widget CRUD + health proxy
+    Settings.ts                 Password + tier change
+    Demo.ts                     Public demo endpoints
+  models/     
+    Account.ts                  User accounts (bcrypt, tier)
+    Dashboard.ts                Per-user dashboards
+    Widget.ts                   Discriminator base schema (type, name, w, h)
+    ServerHealthWidget.ts       Discriminator: + endpoint
+    ClockWidget.ts              Discriminator: + timezone, format
+  middleware/                   secureConnect, requiresLogin, requiresLogout, requireBody
+      
+views/                          Handlebars templates (login, dashboard, settings, notFound)
+hosted/                         Static assets (tokens.css, mainStyle.css, loginStyle.css)
 ```
 
 ## Setup
@@ -95,13 +95,11 @@ Create a `.env` file in the project root:
 
 ```bash
 PORT=3000
-MOGODB_URI=mongodb+srv://...                # NB: legacy typo on the env var name, see below
+MONGODB_URI=mongodb+srv://...                
 REDIS_URL=rediss://...
 SESSION_SECRET=some-long-random-string
 NODE_ENV=development
 ```
-
-> **Note:** the Mongo URI env var is currently spelled `MOGODB_URI` (missing the second `N`) for backward compatibility with the original DomoMaker config. Fix planned for the next release.
 
 ### Install and run
 
@@ -123,36 +121,13 @@ The Heroku `heroku-postbuild` script runs `tsc && webpack` so the dyno only need
 
 ## Scripts
 
-| Script              | Description                                            |
-| ------------------- | ------------------------------------------------------ |
-| `npm run dev`       | Local dev with hot client reload + server auto-restart |
-| `npm run build`     | Webpack bundle for client                              |
-| `npm start`         | Run compiled production output                         |
-| `npm test`          | Lint pass (`eslint --fix` over `server/`)              |
+| Script          | Description                                            |
+| --------------- | ------------------------------------------------------ |
+| `npm run dev`   | Local dev with hot client reload + server auto-restart |
+| `npm run build` | Webpack bundle for client                              |
+| `npm start`     | Run compiled production output                         |
+| `npm test`      | Lint pass (`eslint --fix` over `server/`)              |
 
 ## Profit Model
 
 Free tier: 1 dashboard, 2 widgets. Pro tier: unlimited. Caps are enforced server-side in the controllers, so the limits cannot be bypassed by a client that disables the form-level checks. The settings page exposes a toggle to switch tiers for demonstration; no payment information is collected at any point.
-
-## API
-
-A full endpoint reference (with methods, middleware, parameters, and return types) is in [`FINAL_SUBMISSION.md`](./FINAL_SUBMISSION.md#endpoint-documentation).
-
-## Known behavior
-
-- **Tier downgrade leaves existing data intact.** When a Pro user switches back to Free, their existing widgets / dashboards above the cap remain functional — only new creation is blocked. This matches how Notion, Stripe, and GitHub handle subscription downgrades. A future release may add a soft-lock UI for excess items.
-- **Widget defaults don't backfill old documents.** Widgets created before the `w` / `h` schema fields were added will return `undefined` for those fields; the client falls back to `1×1` for any missing values.
-
-## Borrowed Code
-
-Adapted from the DomoMaker D/E pattern:
-
-- `server/middleware/index.ts` — `requiresLogin`, `requiresLogout`, `secureConnect` (converted to TypeScript)
-- `server/models/Account.ts` — bcrypt `generateHash` / `validatePassword` static and instance methods, `toAPI` static (converted to TypeScript with exported interfaces)
-- `client/helper.js` — `sendPost`, `sendPut`, `handleError`, `hideError` (converted to ES module syntax)
-
-Everything else — the React components, controllers, discriminator schemas, drag-and-drop integration, masonry layout, and styling system — was written from scratch.
-
-## License
-
-MIT
