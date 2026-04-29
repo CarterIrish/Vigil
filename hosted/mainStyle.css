@@ -8,6 +8,52 @@ body {
   line-height: 1.5;
 }
 
+select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-ink);
+  background: var(--color-input-bg);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  outline: none;
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--color-input-bg);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath   d='M2 4l4 4 4-4z' fill='%23808080'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 0.625rem;
+  padding-right: 2rem;
+
+  
+}
+
+
+select:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-soft);
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-ink);
+  background: var(--color-input-bg);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  outline: none;
+}
+
+input[type="text"]:focus-visible,
+input[type="password"]:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-soft);
+}
+
 /* Page Main Elements */
 header {
   padding: 0.75rem 1.5rem;
@@ -127,22 +173,6 @@ button.primary:hover,
   padding: 1.25rem;
   background: var(--color-paper);
   border: 1px solid var(--color-line);
-}
-
-.mainForm input[type="text"],
-.mainForm input[type="password"] {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--color-ink);
-  background: var(--color-input-bg);
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
-  color: var(--color-ink);
-  outline: none;
-}
-
-.mainForm input:focus-visible {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px var(--color-accent-soft);
 }
 
 #errorMessage {
@@ -355,23 +385,6 @@ button.primary:hover,
   background: var(--color-paper);
 }
 
-.addDashInput input,
-.renameDashInput input {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--color-ink);
-  background: var(--color-input-bg);
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
-  color: var(--color-ink);
-  outline: none;
-}
-
-.addDashInput input:focus-visible,
-.renameDashInput input:focus-visible {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px var(--color-accent-soft);
-}
-
 .addDashInput button,
 .renameDashInput button {
   padding: 0.25rem 0.75rem;
@@ -495,7 +508,7 @@ button.primary:hover,
   font-size: 1rem;
   font-weight: 600;
   white-space: nowrap;
-  overflow:hidden;
+  overflow: hidden;
   line-height: 1.4;
   text-overflow: ellipsis;
 }
@@ -504,7 +517,7 @@ button.primary:hover,
   font-size: 0.75rem;
   line-height: 1.2;
   color: var(--color-mute);
-  white-space:nowrap;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -515,12 +528,12 @@ button.primary:hover,
   gap: 0.5rem;
   font-size: 0.825rem;
 }
-.widgetOptions{
-  margin-top:auto;
-  margin-right: .5rem;
-  margin-left:auto;
-  display:flex;
-  gap:0.5rem;
+.widgetOptions {
+  margin-top: auto;
+  margin-right: 0.5rem;
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .widgetOptions button {
