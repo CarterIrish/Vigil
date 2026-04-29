@@ -1,0 +1,63 @@
+/* ─────────────────────────────────────────────
+   VIGIL · Shared design tokens
+   Loaded first by every page, before page-specific CSS.
+   ───────────────────────────────────────────── */
+
+:root {
+  color-scheme: light dark;
+
+  /* ── Typography ──────────────────────────── */
+  --font-sans:
+    "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ── Surface + ink ───────────────────────── */
+  --color-paper: light-dark(#faf8f3, #17181a);
+  --color-sub-bg: light-dark(#f0ede5, #1f2024);
+  --color-ink: light-dark(#141210, #ececec);
+  --color-mute: light-dark(#8a857a, #6e717a);
+  --color-line: light-dark(#cbc6bc, #32343a);
+  --color-input-bg: light-dark(#ffffff, #0c0d10);
+
+  /* ── Accent (highlight / interactive) ────── */
+  --color-accent: oklch(0.55 0.18 197);
+  --color-accent-soft: light-dark(rgba(75, 125, 161, 0.226), rgba(147, 197, 233, 0.226));
+  --color-hover-bg: light-dark(rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.04));
+
+  /* ── Status ──────────────────────────────── */
+  --color-ok: #10b981;
+  --color-warn: #f59e0b;
+  --color-down: #ef4444;
+  --color-error: #ef4444;
+  --color-danger: #ef4444;
+  --color-error-soft: light-dark(
+    rgba(239, 68, 68, 0.08),
+    rgba(239, 68, 68, 0.18)
+  );
+
+  /* ── Density spacing (4px grid) ──────────── */
+  --space-gap: 1rem;       /* 16px */
+  --space-card: 1rem;      /* 16px */
+  --space-row: 1rem;       /* 16px */
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+[data-density="compact"] {
+  --space-gap: 0.5rem;     /* 8px */
+  --space-card: 0.75rem;   /* 12px */
+  --space-row: 0.5rem;     /* 8px */
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

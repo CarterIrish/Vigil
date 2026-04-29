@@ -5,6 +5,8 @@ export interface IWidget extends mongoose.Document {
     name: string;
     owner: mongoose.Types.ObjectId;
     createdAt: Date;
+    w: number;
+    h: number;
 }
 
 export interface IWidgetModel extends mongoose.Model<IWidget> {
@@ -21,6 +23,18 @@ const WidgetSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
+    },
+    w: {
+        type: Number,
+        default: 1,
+        min: 1,
+        max: 4
+    },
+    h: {
+        type: Number,
+        default: 1,
+        min: 1,
+        max: 4
     },
     owner: {
         type: mongoose.Schema.ObjectId,
