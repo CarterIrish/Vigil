@@ -42,7 +42,7 @@ export const ServerHealthWidget = (props) => {
 
   return (
     <>
-      <h2 className="serverHealthTitle">{props.name}</h2>
+      <h2 className="widgetTitle">{props.name}</h2>
       <h3 className="serverHealthUrl">{props.url}</h3>
       <div className="widgetStatusRow">
         <span className={`statusIndicator ${widgetStatus}`} />
