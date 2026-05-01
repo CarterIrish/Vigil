@@ -1,10 +1,12 @@
 import 'dotenv/config';
 
-//* TODO: When a user session ends (30min) the session should be refreshed automtically if they are active on the page.
-//* This can be done by sending a request to the server every 25 minutes or so to keep the session alive.
-//* This will prevent users from losing their place if they leave the page open for an extended period of time. 
-//* This should only be done while window is focused to avoid keeping an active session for users who have left 
-//* the page open but are not actively using it.
+//* TODO: Sessions use `rolling: true`, so any request from the client extends the cookie's TTL.
+//* To avoid keeping sessions alive for users who aren't actually viewing the page, gate client-side
+//* refresh requests (widget polling, keep-alives) on the Page Visibility API:
+//*   - Only fire requests when `document.visibilityState === 'visible'`.
+//*   - Subscribe to `visibilitychange` to pause/resume the refresh interval.
+//* Use visibility, NOT `document.hasFocus()` — focus is false when another window is active, which
+//* would incorrectly pause updates for users viewing the tab on a second monitor.
 
 import path from 'path';
 import express, { Express } from 'express';
@@ -21,6 +23,7 @@ import { createClient } from 'redis';
 
 const PORT = process.env.PORT || process.env.NODE_PORT;
 const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/Vigil';
+const SESSION_TTL_MS = Number(process.env.SESSION_TTL_MS) || 30 * 60 * 1000;
 
 mongoose.connect(dbURI).catch((err) => {
     if (err) {
@@ -49,8 +52,9 @@ redisClient.connect().then(() => {
         secret: process.env.SESSION_SECRET!,
         resave: false,
         saveUninitialized: false,
+        rolling: true,
         cookie: {
-            maxAge: 30 * 60 * 1000, // 30 minutes in ms
+            maxAge: SESSION_TTL_MS,
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
         }
