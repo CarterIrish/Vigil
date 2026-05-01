@@ -174,10 +174,6 @@ export const SidePanel = ({
                       className="deleteDashButton"
                       onClick={(e) => {
                         e.stopPropagation();
-                        console.log(
-                          "Delete button clicked for dashboard ID:",
-                          dash._id,
-                        );
                         setDeletingDashId(dash._id);
                       }}
                       aria-label="Delete dashboard"
