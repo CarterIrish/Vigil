@@ -55,6 +55,7 @@ export const ServerHealthWidget = (props) => {
       <div className="widgetOptions">
         <button
           className="refreshButton"
+          aria-label="Refresh health status"
           onClick={() => setRefreshToggle(!refreshToggle)}
         >
           <svg

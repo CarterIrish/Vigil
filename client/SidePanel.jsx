@@ -87,7 +87,7 @@ export const SidePanel = ({
       <div className="sidepanelSection">
         <div className="sidepanelHeader">
           <h2>Dashboards</h2>
-          <button onClick={() => setAddingDash(true)}>
+          <button onClick={() => setAddingDash(true)} aria-label="Add dashboard">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
