@@ -1,38 +1,37 @@
+<!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vigil - Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/assets/tokens.css">
-    <link rel="stylesheet" href="/assets/mainStyle.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vigil - Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/tokens.css" />
+  <link rel="stylesheet" href="/assets/mainStyle.css" />
+</head>
 
-  <body>
-    <header>
-      <div class="headerLogo">
-        <h1>Vigil Dashboard</h1>
-      </div>
-      <nav class="headerNav">
-        <a class="button" href="/settings">Settings</a>
-        <form action="/logout" method="POST" style="display:inline;">
-          <button type="submit" class="button">Logout</button>
-        </form>
-      </nav>
-    </header>
-    <main class="dashboardPage">
-      <div id="app"></div>
-    </main>
-    <footer>
-      <p>Copyright &copy; 2026 Vigil. All rights reserved.</p>
-    </footer>
-    <script src="/assets/appBundle.js"></script>
-  </body>
+<body>
+  <header>
+    <div class="headerLogo">
+      <h1>Vigil Dashboard</h1>
+    </div>
+    <nav class="headerNav">
+      <a class="button" href="/settings">Settings</a>
+      <form action="/logout" method="POST" style="display:inline;">
+        <button type="submit" class="button">Logout</button>
+      </form>
+    </nav>
+  </header>
+  <main class="dashboardPage">
+    <div id="app"></div>
+  </main>
+  <footer>
+    <p>Copyright &copy; 2026 Vigil. All rights reserved.</p>
+  </footer>
+  <script src="/assets/appBundle.js"></script>
+</body>
 
 </html>

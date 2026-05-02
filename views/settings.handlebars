@@ -1,38 +1,40 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vigil - Settings</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/assets/tokens.css">
-    <link rel="stylesheet" href="/assets/mainStyle.css" />
-  </head>
-  <body>
-    <header>
-      <div class="headerLogo">
-        <h1>Vigil</h1>
-      </div>
-      <nav class="headerNav">
-        <a class="button" href="/dashboard">Dashboard</a>
-        <form action="/logout" method="POST" style="display:inline;">
-          <button type="submit" class="button">Logout</button>
-        </form>
 
-      </nav>
-    </header>
-    <main class="settingsPage">
-      <h1>Account Settings</h1>
-      <div id="app" data-subscription-tier="{{subscriptionTier}}"></div>
-      <p id="errorMessage" style="display:none;"></p>
-    </main>
-    <footer>
-      <p>Copyright &copy; 2026 Vigil. All rights reserved.</p>
-    </footer>
-    <script src="/assets/settingsBundle.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vigil - Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/tokens.css" />
+  <link rel="stylesheet" href="/assets/mainStyle.css" />
+</head>
+
+<body>
+  <header>
+    <div class="headerLogo">
+      <h1>Vigil</h1>
+    </div>
+    <nav class="headerNav">
+      <a class="button" href="/dashboard">Dashboard</a>
+      <form action="/logout" method="POST" style="display:inline;">
+        <button type="submit" class="button">Logout</button>
+      </form>
+
+    </nav>
+  </header>
+  <main class="settingsPage">
+    <h1>Account Settings</h1>
+    <div id="app" data-subscription-tier="{{subscriptionTier}}"></div>
+    <p id="errorMessage" style="display:none;"></p>
+  </main>
+  <footer>
+    <p>Copyright &copy; 2026 Vigil. All rights reserved.</p>
+  </footer>
+  <script src="/assets/settingsBundle.js"></script>
+</body>
+
 </html>
