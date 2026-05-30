@@ -60,9 +60,9 @@
     "express": "^5.2.1",
     "express-handlebars": "^9.0.1",
     "express-session": "^1.19.0",
-    "helmet": "^8.1.0",
-    "mongoose": "^9.6.1",
-    "redis": "^5.12.1",
+    "helmet": "^8.2.0",
+    "mongoose": "^9.6.3",
+    "redis": "^6.0.0",
     "serve-favicon": "^2.5.1",
     "underscore": "^1.13.8"
   }
