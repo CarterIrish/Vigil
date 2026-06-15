@@ -1,59 +1,44 @@
 import { useState, useEffect } from "react";
 
-export const ServerHealthWidget = (props) => {
+export const GameDealsWidget = (props) => {
   const [refreshToggle, setRefreshToggle] = useState(false);
-  const [, setFailureCount] = useState(0);
-  const [widgetStatus, setWidgetStatus] = useState("unknown");
-
-  const handleHealthFailure = (prevCount) => {
-    const newCount = prevCount + 1;
-    // TODO: Extract thresholds to constants or widget settings
-    setWidgetStatus(newCount >= 3 ? "down" : "unhealthy");
-    return newCount;
-  };
+  const [deals, setDeals] = useState([]);
 
   useEffect(() => {
-    const sendHealthCheck = async () => {
+    const fetchDeals = async () => {
       try {
-        const params = new URLSearchParams({ endpoint: props.url });
-        const result = await fetch(`/api/healthwidget?${params.toString()}`);
-        const data = await result.json();
-
-        if (data.status === "healthy") {
-          setWidgetStatus("healthy");
-          setFailureCount(0);
-        } else {
-          setFailureCount(handleHealthFailure);
-        }
-      } catch (err) {
-        console.error("Error fetching health data: ", err);
-        setFailureCount(handleHealthFailure);
+        const params = new URLSearchParams();
+        if (props.storeID) params.set("storeID", props.storeID);
+        if (props.maxPrice) params.set("maxPrice", props.maxPrice);
+        const result = await fetch(`/api/gamedealswidget?${params.toString()}`);
+        const deals = await result.json();
+        setDeals(deals);
+      } catch (error) {
+        console.error("Error fetching game deals:", error);
       }
     };
 
-    sendHealthCheck();
-  }, [refreshToggle, props.url]);
+    fetchDeals();
+  }, [refreshToggle]);
 
-  // TODO: Pull refresh interval from widget settings and allow user to configure it
   useEffect(() => {
     const interval = setInterval(() => {
       setRefreshToggle((prev) => !prev);
-    }, 60000);
+    }, 60000); // Refresh every 60 seconds
+
     return () => clearInterval(interval);
-  }, [props.url]);
+  }, []);
 
   return (
     <>
       <h2 className="widgetTitle">{props.name}</h2>
-      <h3 className="serverHealthUrl">{props.url}</h3>
-      <div className="widgetStatusRow">
-        <span className={`statusIndicator ${widgetStatus}`} />
-        <p>
-          {widgetStatus
-            ? `Health Status: ${widgetStatus}`
-            : "No data available"}
-        </p>
-      </div>
+      <ul className="gameDealsList">
+        {deals.map((deal) => (
+          <li key={deal.dealID}>
+            {deal.title} — ${deal.salePrice} ({deal.savings}% off)
+          </li>
+        ))}
+      </ul>
       <div className="widgetOptions">
         <button
           className="refreshButton"
@@ -98,5 +83,3 @@ export const ServerHealthWidget = (props) => {
     </>
   );
 };
-
-export default ServerHealthWidget;

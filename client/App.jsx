@@ -6,6 +6,7 @@ import { DragDropProvider, useDroppable } from "@dnd-kit/react";
 import AddWidgetModal from "./AddWidgetModal.jsx";
 import EditWidgetModal from "./EditWidgetModal.jsx";
 import ClockWidget from "./ClockWidget.jsx";
+import { GameDealsWidget } from "./GameDealsWidget.jsx";
 
 const WidgetArea = ({ widgets, setReloadDash, activeDashboard }) => {
   const { ref } = useDroppable({ id: "widgetArea" });
@@ -25,7 +26,7 @@ const WidgetArea = ({ widgets, setReloadDash, activeDashboard }) => {
               />
             );
             break;
-          case 'Clock':
+          case "Clock":
             widgetContent = (
               <ClockWidget
                 name={widget.name}
@@ -35,10 +36,18 @@ const WidgetArea = ({ widgets, setReloadDash, activeDashboard }) => {
               />
             );
             break;
+          case "GameDeals":
+            widgetContent = (
+              <GameDealsWidget
+                name={widget.name}
+                onEdit={() => setSelectedWidget(widget)}
+              />
+            );
+            break;
           default:
             return null;
         }
-        if(!widgetContent) return null;
+        if (!widgetContent) return null;
         return (
           <div
             key={widget._id}

@@ -53,6 +53,12 @@ const AddWidgetModal = ({ widgetType, dashboardId, onClose, onSuccess }) => {
             </select>
           </>
         );
+        case "GameDeals":
+          return (
+            <>
+            <p>No additional configuration needed for Game Deals widget.</p>
+            </>
+          )
       default:
         return null;
     }

@@ -219,6 +219,7 @@ export const SidePanel = ({
             <>
               <DraggableWidget widgetId="ServerHealth" label="Server Health" />
               <DraggableWidget widgetId="Clock" label="Clock" />
+              <DraggableWidget widgetId="GameDeals" label="Game Deals" />
             </>
           )}
         </div>
