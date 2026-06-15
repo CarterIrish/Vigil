@@ -18,7 +18,8 @@ const router = (app: Application) => {
 
     //* API routes
     app.get('/api/healthwidget', middleware.secureConnect, middleware.requiresLogin, controllers.Widget.HealthWidget);
-    
+    app.get('/api/gamedealswidget', middleware.secureConnect, middleware.requiresLogin, controllers.Widget.GameDealsWidget);
+
     
     // Create new widget
     app.post('/api/widget', middleware.secureConnect, middleware.requiresLogin, middleware.requireBody, controllers.Widget.createWidget);

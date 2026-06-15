@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import WidgetModel from '../models/Widget';
 import ServerHealthWidgetModel from '../models/ServerHealthWidget';
 import ClockWidgetModel from '../models/ClockWidget';
+import GameDealsWidgetModel from '../models/GameDealsWidget';
 import DashboardModel from '../models/Dashboard';
 import { FREE_TIER_LIMITS } from '../config/accountLimits';
 //* Controllers for generic widget operations
@@ -89,6 +90,41 @@ export const createWidget = async (req: Request, res: Response) => {
                     type: newWidget.type,
                     timezone: newWidget.timezone,
                     format: newWidget.format,
+                    id: newWidget._id,
+                    dashboardId: req.body.dashboardId
+                });
+            }
+            catch (err: unknown) {
+                return res.status(500).json({ error: 'Failed to create widget', errorDetails: err instanceof Error ? err.message : 'Unknown error' });
+            }
+        }
+        case 'GameDeals': {
+            // Config is optional — storeID/maxPrice fall back to schema defaults.
+            try {
+                const widgetData = {
+                    ...baseData,
+                    ...(req.body.storeID ? { storeID: req.body.storeID } : {}),
+                    ...(req.body.maxPrice ? { maxPrice: req.body.maxPrice } : {}),
+                };
+                const dashboard = await DashboardModel.findOne({
+                    _id: req.body.dashboardId,
+                    owner: req.session.account._id
+                });
+                if (!dashboard) {
+                    return res.status(404).json({ error: 'Dashboard not found' });
+                }
+
+                const newWidget = new GameDealsWidgetModel(widgetData);
+                await newWidget.save();
+                await DashboardModel.findOneAndUpdate(
+                    { _id: req.body.dashboardId, owner: req.session.account._id },
+                    { $push: { widgets: newWidget._id } },
+                );
+                return res.status(201).json({
+                    name: newWidget.name,
+                    type: newWidget.type,
+                    storeID: newWidget.storeID,
+                    maxPrice: newWidget.maxPrice,
                     id: newWidget._id,
                     dashboardId: req.body.dashboardId
                 });
@@ -210,4 +246,37 @@ export const HealthWidget = async (req: Request, res: Response) => {
         return res.status(500).json({ error: 'Failed to fetch health data', errorDetails: err instanceof Error ? err.message : 'Unknown error' });
     }
 
+}
+
+export const GameDealsWidget = async (req: Request, res: Response) => {
+    // CheapShark is key-free. We proxy server-side because CSP connect-src only allows 'self'.
+    const storeID = typeof req.query.storeID === 'string' ? req.query.storeID : '1';
+    const maxPrice = typeof req.query.maxPrice === 'string' ? req.query.maxPrice : '15';
+
+    const params = new URLSearchParams({
+        storeID,
+        upperPrice: maxPrice,
+        sortBy: 'Savings',
+        pageSize: '5',
+    });
+
+    try {
+        const dealsResponse = await fetch(`https://www.cheapshark.com/api/1.0/deals?${params.toString()}`);
+        const deals = await dealsResponse.json();
+
+        // Trim CheapShark's large payload to only what the widget renders.
+        const trimmed = Array.isArray(deals)
+            ? deals.map((d) => ({
+                title: d.title,
+                salePrice: d.salePrice,
+                normalPrice: d.normalPrice,
+                savings: Math.round(Number(d.savings)),
+                dealID: d.dealID,
+            }))
+            : [];
+
+        res.status(200).json(trimmed);
+    } catch (err: unknown) {
+        return res.status(500).json({ error: 'Failed to fetch game deals', errorDetails: err instanceof Error ? err.message : 'Unknown error' });
+    }
 }
